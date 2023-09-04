@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/screens/setting_screen.dart';
@@ -17,7 +18,7 @@ Widget customProfileBar() {
               children: [
                 Text(
                   textAlign: TextAlign.right,
-                  'مرحبا بك محمد',
+                  '${AppStorage.getUserName} مرحبا بك',
                   maxLines: 1,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,

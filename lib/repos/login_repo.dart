@@ -6,7 +6,9 @@ import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/core/utils/dio_helper.dart';
 import 'package:shared/core/utils/dio_string.dart';
 import 'package:shared/models/login_error_model.dart';
+import 'package:shared/models/logout_error.dart';
 import 'package:shared/models/logout_model.dart';
+import 'package:shared/models/user_error_model.dart';
 
 import '../models/user_model.dart';
 
@@ -24,9 +26,15 @@ class LoginRepo {
         print("Success LoginRepo");
         print(response.data);
         return Right(UserModel.fromJson(jsonDecode(response.toString())));
-      } else {
+      } else if (response.data['result'] == false &&
+          response.data['status'] == 422) {
         return Left(LoginModel.fromJson(jsonDecode(response.toString()))
             .message
+            .toString());
+      } else {
+        return Left(UserModeError.fromJson(jsonDecode(response.toString()))
+            .errors[0]
+            .phone
             .toString());
       }
     } catch (e) {
@@ -48,7 +56,7 @@ class LoginRepo {
         print(response.data);
         return Right(LogoutModel.fromJson(jsonDecode(response.toString())));
       } else {
-        return Left(LogoutModel.fromJson(jsonDecode(response.toString()))
+        return Left(LogoutErrorModel.fromJson(jsonDecode(response.toString()))
             .message
             .toString());
       }

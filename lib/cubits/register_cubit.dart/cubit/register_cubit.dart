@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared/core/utils/app_func.dart';
 import 'package:shared/core/utils/app_storage.dart';
-
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/core/widgets/custom_snackbar.dart';
 import 'package:shared/screens/privacy_screen.dart';
@@ -52,10 +51,8 @@ class RegisterCubit extends Cubit<RegisterState> {
         },
         (res) async {
           showSnackBar(res.message);
-          print(res.data.user.id);
           emit(RegisterLoaded());
           AppStorage.cacheUserInfo(res);
-          await AppStorage.isLoged(true);
           await AppStorage.cacheToken(res.data.token!);
           log('-----------------');
           log(AppStorage.getToken!);

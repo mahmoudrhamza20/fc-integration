@@ -18,6 +18,12 @@ abstract class AppStorage {
     return null;
   }
 
+  static bool? done() {
+    return true;
+  }
+
+  static get doneLoged => done;
+
   static String? get getToken {
     if (_box.hasData('token')) return _box.read('token');
     return null;
@@ -44,6 +50,7 @@ abstract class AppStorage {
   static Future<void> isLoged(bool isloged) => _box.write('islogin', isloged);
 
   static int get getUserId => getUserInfo!.data.user.id;
+  static String get getUserName => getUserInfo!.data.user.name;
 
   static String get getCurrentLang => getLang;
 
@@ -54,6 +61,6 @@ abstract class AppStorage {
 
   static Future<void> signOut() async {
     await _box.erase();
-    MagicRouter.navigateAndPopAll(const LoginScreen());
+    // MagicRouter.navigateAndPopAll(const LoginScreen());
   }
 }

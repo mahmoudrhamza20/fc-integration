@@ -103,10 +103,17 @@ class SettingScreen extends StatelessWidget {
             BlocBuilder<LoginCubit, LoginState>(
               builder: (context, state) {
                 final cubit = LoginCubit.of(context);
-                return ProfileMenu(
-                  text: "تسجيل الخروج",
-                  press: () => cubit.logout(),
-                );
+                return state is LogoutLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : TextButton(
+                        onPressed: () => cubit.logout(),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("تسجيل الخروج"),
+                          ],
+                        ),
+                      );
               },
             ),
           ],

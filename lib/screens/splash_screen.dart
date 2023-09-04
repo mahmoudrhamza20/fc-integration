@@ -67,12 +67,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
     Timer(const Duration(seconds: 4), () {
       setState(() {
-        if (AppStorage.isLogged == true) {
-          MagicRouter.navigateAndPopAll(const HomeScreen());
-        } else {
-          Navigator.pushReplacement(
-              context, PageTransition(const SecondPage()));
-        }
+        Navigator.pushReplacement(context, PageTransition(const SecondPage()));
       });
     });
   }

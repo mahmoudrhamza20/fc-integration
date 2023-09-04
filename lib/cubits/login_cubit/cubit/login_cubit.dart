@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared/core/utils/app_func.dart';
 import 'package:shared/core/utils/app_storage.dart';
+import 'package:shared/core/utils/local_cache_helper.dart';
 import 'package:shared/models/user_model.dart';
 import 'package:shared/screens/splash_screen.dart';
 import '../../../core/utils/magic_router.dart';
@@ -43,9 +44,10 @@ class LoginCubit extends Cubit<LoginState> {
           showSnackBar(res.message);
           userData = res.data.user;
           print(res.data.token);
-          await AppStorage.isLoged(true);
+          await AppStorage.cacheToken(res.data.token!);
           await AppStorage.cacheUserInfo(res);
           log('-----------------');
+          print(userData!.name);
           log(AppStorage.getToken!);
           log('-----------------');
           MagicRouter.navigateAndPopAll(const HomeScreen());
@@ -65,6 +67,7 @@ class LoginCubit extends Cubit<LoginState> {
       },
       (res) async {
         showSnackBar(res.message);
+        AppStorage.signOut();
         MagicRouter.navigateAndPopAll(const SecondPage());
         emit(LogoutLoaded());
       },

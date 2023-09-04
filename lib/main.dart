@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
 import 'package:shared/cubits/register_cubit.dart/cubit/register_cubit.dart';
 import 'package:shared/firebase_options.dart';
@@ -22,6 +23,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   Bloc.observer = AppBlocObserver();
   await CacheHelper.init();
+  await AppStorage.init();
 
   runApp(EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],
