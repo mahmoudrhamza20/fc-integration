@@ -7,7 +7,7 @@ import 'package:shared/core/utils/hex_color.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/core/utils/validator.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
-import 'package:shared/screens/home_screen.dart';
+
 import 'package:shared/screens/splash_screen.dart';
 import 'package:shared/widgets/custom_button.dart';
 import 'package:shared/widgets/custom_text_field.dart';
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    MagicRouter.navigateTo(const SecondPage());
+                                    MagicRouter.navigateTo(SecondPage());
                                   },
                                   child: Text(
                                     'تسجيل حساب',

@@ -1,7 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/models/user_model.dart';
-import 'package:shared/screens/login_screen.dart';
 
 abstract class AppStorage {
   static final GetStorage _box = GetStorage();

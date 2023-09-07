@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:pinput/pinput.dart';
 import 'package:shared/core/utils/brand_colors.dart';
-import 'package:shared/core/utils/magic_router.dart';
-import 'package:shared/screens/complete_screen.dart';
+
+import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
+
 import 'package:shared/widgets/custom_button.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
@@ -62,80 +64,88 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
         backgroundColor: BrandColors.primary,
         foregroundColor: Colors.white,
       ),
-      body: SafeArea(
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              ClipPath(
-                clipper: WaveClipperTwo(),
-                child: Container(
-                  height: 150,
-                  color: BrandColors.primary,
-                  child: const Center(child: Text("")),
-                ),
-              ),
-              const Text(
-                'Verification code',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Pinput(
-                    length: 6,
-                    controller: controller,
-                    focusNode: focusNode,
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: defaultPinTheme.copyWith(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.05999999865889549),
-                            offset: Offset(0, 3),
-                            blurRadius: 16,
-                          )
-                        ],
-                      ),
+      body: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          final cubit = LoginCubit.of(context);
+          return SafeArea(
+            child: Form(
+              key: cubit.checkOtpFormKey,
+              child: Column(
+                children: [
+                  ClipPath(
+                    clipper: WaveClipperTwo(),
+                    child: Container(
+                      height: 150,
+                      color: BrandColors.primary,
+                      child: const Center(child: Text("")),
                     ),
-                    validator: (s) {
-                      return s == '111111' ? null : '';
-                    },
-                    onCompleted: (value) {
-                      // widget.code = value;
-                      // cubit.checkCode(code: value);
-                    },
-                    showCursor: true,
-                    cursor: cursor,
-                  )),
-              SizedBox(height: 20.h),
-              customButton(
-                  text: 'Next',
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      MagicRouter.navigateAndPopAll(CompleteProfileScreen(
-                        phone: widget.phone,
-                      ));
-                      print(widget.phone);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        backgroundColor: BrandColors.primary,
-                        content: Text(
-                          'Verification code Incorrect',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 15),
+                  ),
+                  const Text(
+                    'Verification code',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Pinput(
+                        showCursor: true,
+                        cursor: cursor,
+                        length: 4,
+                        controller: cubit.checkOtpController,
+                        focusNode: focusNode,
+                        defaultPinTheme: defaultPinTheme,
+                        focusedPinTheme: defaultPinTheme.copyWith(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromRGBO(
+                                    0, 0, 0, 0.05999999865889549),
+                                offset: Offset(0, 3),
+                                blurRadius: 16,
+                              )
+                            ],
+                          ),
                         ),
-                      ));
-                    }
-                  },
-                  context: context)
-            ],
-          ),
-        ),
+                        validator: (s) {
+                          return s == '1111' ? null : '';
+                        },
+                        // onCompleted: (value) {
+                        // widget.code = value;
+                        // cubit.checkCode(code: value);
+                        // },
+                      )),
+                  SizedBox(height: 20.h),
+                  state is CheckOtpLoading
+                      ? const CircularProgressIndicator()
+                      : customButton(
+                          text: 'Next',
+                          context: context,
+                          onTap: () {
+                            if (cubit.checkOtpFormKey.currentState!
+                                .validate()) {
+                              cubit.checkOtp();
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                backgroundColor: BrandColors.primary,
+                                content: Text(
+                                  "رمز التحقق غير صحيح",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ));
+                            }
+                          },
+                        )
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
