@@ -9,4 +9,5 @@ class EndPoints {
   static const String checkOtp = 'users/checkOtp';
   static const String checkPhone = 'users/phone';
   static const String terms = 'terms';
+  static const String groups = 'groups';
 }

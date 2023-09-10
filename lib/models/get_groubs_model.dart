@@ -13,7 +13,7 @@ class GetGroupsModel {
   bool result;
   String message;
   int status;
-  Data data;
+  GroupData data;
 
   GetGroupsModel({
     required this.result,
@@ -26,7 +26,7 @@ class GetGroupsModel {
         result: json["result"],
         message: json["message"],
         status: json["status"],
-        data: Data.fromJson(json["data"]),
+        data: GroupData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,14 +37,14 @@ class GetGroupsModel {
       };
 }
 
-class Data {
+class GroupData {
   List<Group> groups;
 
-  Data({
+  GroupData({
     required this.groups,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory GroupData.fromJson(Map<String, dynamic> json) => GroupData(
         groups: List<Group>.from(json["groups"].map((x) => Group.fromJson(x))),
       );
 

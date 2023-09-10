@@ -15,34 +15,34 @@ class MyGroupsScreen extends StatefulWidget {
 }
 
 class _MyGroupsScreenState extends State<MyGroupsScreen> {
-  List<DataRow> _testRows() {
-    return [
-      DataRow(
-        cells: [
-          DataCell(
-            SizedBox(
-              width: 100,
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return Text(index.toString());
-                },
-              ),
-            ),
-          ),
-          const DataCell(
-            Text('Data B'),
-          ),
-          const DataCell(
-            Text('Data C'),
-          ),
-        ],
-      ),
-    ];
-  }
+  // List<DataRow> _testRows() {
+  //   return [
+  //     DataRow(
+  //       cells: [
+  //         DataCell(
+  //           SizedBox(
+  //             width: 100,
+  //             child: ListView.builder(
+  //               shrinkWrap: true,
+  //               physics: const NeverScrollableScrollPhysics(),
+  //               itemCount: 3,
+  //               scrollDirection: Axis.horizontal,
+  //               itemBuilder: (BuildContext context, int index) {
+  //                 return Text(index.toString());
+  //               },
+  //             ),
+  //           ),
+  //         ),
+  //         const DataCell(
+  //           Text('Data B'),
+  //         ),
+  //         const DataCell(
+  //           Text('Data C'),
+  //         ),
+  //       ],
+  //     ),
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {
