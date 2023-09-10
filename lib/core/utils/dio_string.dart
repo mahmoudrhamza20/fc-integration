@@ -8,4 +8,5 @@ class EndPoints {
   static const String logout = 'users/logout';
   static const String checkOtp = 'users/checkOtp';
   static const String checkPhone = 'users/phone';
+  static const String terms = 'terms';
 }
