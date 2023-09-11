@@ -1,32 +1,34 @@
 // To parse this JSON data, do
 //
-//     final getGroupsModel = getGroupsModelFromJson(jsonString);
+//     final getGroupsByIdModel = getGroupsByIdModelFromJson(jsonString);
 
 import 'dart:convert';
 
-GetGroupsModel getGroupsModelFromJson(String str) =>
-    GetGroupsModel.fromJson(json.decode(str));
+GetGroupsByIdModel getGroupsByIdModelFromJson(String str) =>
+    GetGroupsByIdModel.fromJson(json.decode(str));
 
-String getGroupsModelToJson(GetGroupsModel data) => json.encode(data.toJson());
+String getGroupsByIdModelToJson(GetGroupsByIdModel data) =>
+    json.encode(data.toJson());
 
-class GetGroupsModel {
+class GetGroupsByIdModel {
   bool result;
   String message;
   int status;
-  GroupData data;
+  GetGroupsByIdData data;
 
-  GetGroupsModel({
+  GetGroupsByIdModel({
     required this.result,
     required this.message,
     required this.status,
     required this.data,
   });
 
-  factory GetGroupsModel.fromJson(Map<String, dynamic> json) => GetGroupsModel(
+  factory GetGroupsByIdModel.fromJson(Map<String, dynamic> json) =>
+      GetGroupsByIdModel(
         result: json["result"],
         message: json["message"],
         status: json["status"],
-        data: GroupData.fromJson(json["data"]),
+        data: GetGroupsByIdData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,30 +39,31 @@ class GetGroupsModel {
       };
 }
 
-class GroupData {
-  List<Group> groups;
+class GetGroupsByIdData {
+  GroupById group;
 
-  GroupData({
-    required this.groups,
+  GetGroupsByIdData({
+    required this.group,
   });
 
-  factory GroupData.fromJson(Map<String, dynamic> json) => GroupData(
-        groups: List<Group>.from(json["groups"].map((x) => Group.fromJson(x))),
+  factory GetGroupsByIdData.fromJson(Map<String, dynamic> json) =>
+      GetGroupsByIdData(
+        group: GroupById.fromJson(json["group"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "groups": List<dynamic>.from(groups.map((x) => x.toJson())),
+        "group": group.toJson(),
       };
 }
 
-class Group {
+class GroupById {
   int id;
   int groupNumber;
   String name;
   String stage;
   User user;
 
-  Group({
+  GroupById({
     required this.id,
     required this.groupNumber,
     required this.name,
@@ -68,7 +71,7 @@ class Group {
     required this.user,
   });
 
-  factory Group.fromJson(Map<String, dynamic> json) => Group(
+  factory GroupById.fromJson(Map<String, dynamic> json) => GroupById(
         id: json["id"],
         groupNumber: json["group_number"],
         name: json["name"],

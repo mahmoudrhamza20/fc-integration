@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
+import 'package:shared/cubits/get_groups_cubit/cubit/get_groups_cubit.dart';
 import 'package:shared/widgets/custom_card.dart';
 
 class GroupDetails extends StatelessWidget {
-  const GroupDetails({super.key, required this.numberGroup});
+  const GroupDetails({
+    super.key,
+    required this.groubId,
+    required this.name,
+    required this.stage,
+    required this.groupNumber,
+    //  required this.groupById
+  });
 
-  final String numberGroup;
-
+  final int groubId;
+  final String name;
+  final String stage;
+  final String groupNumber;
+  //final GroupById groupById;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,52 +29,65 @@ class GroupDetails extends StatelessWidget {
           backgroundColor: BrandColors.primary,
           foregroundColor: Colors.white,
         ),
-        body: SafeArea(
-          child: Column(children: [
-            ClipPath(
-              clipper: WaveClipperTwo(),
-              child: Container(
-                height: 100,
-                color: BrandColors.primary,
-                child: Center(
-                    child: Column(
-                  children: [
-                    Text(
-                      "المجموعة $numberGroup",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        color: Colors.white,
-                      ),
+        body: BlocProvider(
+          create: (context) => GetGroupsCubit()
+            ..searchKeywords()
+            ..getGroupsById(groubId: groubId),
+          child: BlocBuilder<GetGroupsCubit, GetGroupsState>(
+            builder: (context, state) {
+              final cubit = GetGroupsCubit.of(context);
+              return SafeArea(
+                child: Column(children: [
+                  ClipPath(
+                    clipper: WaveClipperTwo(),
+                    child: Container(
+                      height: 100,
+                      color: BrandColors.primary,
+                      child: Center(
+                          child: Column(
+                        children: [
+                          Text(
+                            name,
+                            // "المجموعة $numberGroup",
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      )),
                     ),
-                  ],
-                )),
-              ),
-            ),
-            customCard(title: 'المرحلة', width: 300.w, height: 60.h),
-            customCard(title: 'رقم المجموعة', width: 300.w, height: 60.h),
-            customCard(title: 'الترتيب الحالي', width: 300.w, height: 60.h),
-            SizedBox(height: 20.h),
-            Text(
-              "الأكواد المتاحة",
-              style: TextStyle(
-                fontSize: 20.sp,
-                color: BrandColors.primary,
-              ),
-            ),
-            SizedBox(height: 20.h),
-            const Text(
-              'EG27L12158',
-              style: TextStyle(fontSize: 16),
-            ),
-            const Text(
-              'EG27L12158',
-              style: TextStyle(fontSize: 16),
-            ),
-            const Text(
-              'EG27L12158',
-              style: TextStyle(fontSize: 16),
-            ),
-          ]),
+                  ),
+                  customCard(title: stage, width: 300.w, height: 60.h),
+                  customCard(
+                      title: groupNumber.toString(),
+                      width: 300.w,
+                      height: 60.h),
+                  customCard(
+                      title: 'الترتيب الحالي', width: 300.w, height: 60.h),
+                  SizedBox(height: 20.h),
+                  Text(
+                    "الأكواد المتاحة",
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      color: BrandColors.primary,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  state is SearchKeywordsLoading
+                      ? const CircularProgressIndicator()
+                      : Text(
+                          cubit.searchKeywordsData2 ?? '',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                  // const Text(
+                  //   'EG27L12158',
+                  //   style: TextStyle(fontSize: 16),
+                  // ),
+                ]),
+              );
+            },
+          ),
         ));
   }
 }
