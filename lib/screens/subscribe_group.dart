@@ -21,92 +21,93 @@ class SubscribeGroup extends StatelessWidget {
           backgroundColor: BrandColors.primary,
           foregroundColor: Colors.white,
         ),
-        body: BlocProvider(
-            create: (context) => StagesCubit()..getGroups(),
-            child: SafeArea(
-                child: SingleChildScrollView(
-              child: Column(children: [
-                ClipPath(
-                  clipper: WaveClipperTwo(),
-                  child: Container(
-                    height: 100,
-                    color: BrandColors.primary,
-                    child: Center(
-                        child: Column(
-                      children: [
-                        Text(
-                          "المراحل المتاحة للمشترك",
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    )),
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: Column(children: [
+          ClipPath(
+            clipper: WaveClipperTwo(),
+            child: Container(
+              height: 100,
+              color: BrandColors.primary,
+              child: Center(
+                  child: Column(
+                children: [
+                  Text(
+                    "المراحل المتاحة للمشترك",
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      color: Colors.white,
+                    ),
                   ),
+                ],
+              )),
+            ),
+          ),
+          SizedBox(height: 20.h),
+          // BlocBuilder<StagesCubit, StagesState>(
+          //   builder: (context, state) {
+          //     final cubit = StagesCubit.of(context);
+          //     return state is StagesLoading
+          //         ? const Center(child: CircularProgressIndicator())
+          //         : Expanded(
+          //             child: SizedBox(
+          //               height: 200.h,
+          //               child: ListView.builder(
+          //                 // shrinkWrap: true,
+          //                 // physics: const NeverScrollableScrollPhysics(),
+          //                 itemCount: 2,
+          //                 itemBuilder:
+          //                     (BuildContext context, int index) {
+          //                   return StagesRow(
+          //                       stage: cubit.stagesData!.stages[index]);
+          //                 },
+          //               ),
+          //             ),
+          //           );
+          //   },
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                // 'المرحلة',
+                "المرحلة السابقة",
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  color: BrandColors.primary,
                 ),
-                SizedBox(height: 20.h),
-                // BlocBuilder<StagesCubit, StagesState>(
-                //   builder: (context, state) {
-                //     final cubit = StagesCubit.of(context);
-                //     return state is StagesLoading
-                //         ? const Center(child: CircularProgressIndicator())
-                //         : SizedBox(
-                //             height: 300.h,
-                //             child: ListView.builder(
-                //               //physics: const NeverScrollableScrollPhysics(),
-                //               itemCount: cubit.stagesData!.stages.length,
-                //               itemBuilder: (BuildContext context, int index) {
-                //                 return StagesRow(
-                //                     stage: cubit.stagesData!.stages[index]);
-                //               },
-                //             ),
-                //           );
-                //   },
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      // 'المرحلة',
-                      "المرحلة السابقة",
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        color: BrandColors.primary,
-                      ),
-                    ),
-                    SizedBox(width: 30.w),
-                    InkWell(
-                        onTap: () {
-                          MagicRouter.navigateTo(const FirstStageScreen());
-                        },
-                        child: customCard(
-                            title: 'الأولي', width: 120.w, height: 60.h)),
-                  ],
+              ),
+              SizedBox(width: 30.w),
+              InkWell(
+                  onTap: () {
+                    MagicRouter.navigateTo(const FirstStageScreen());
+                  },
+                  child:
+                      customCard(title: 'الأولي', width: 120.w, height: 60.h)),
+            ],
+          ),
+          SizedBox(height: 10.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "المرحلة التالية",
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  color: BrandColors.primary,
                 ),
-                SizedBox(height: 10.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "المرحلة التالية",
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        color: BrandColors.primary,
-                      ),
-                    ),
-                    SizedBox(width: 45.w),
-                    InkWell(
-                        onTap: () {
-                          MagicRouter.navigateTo(const SecondStageScreen());
-                        },
-                        child: customCard(
-                            title: 'الثانية', width: 120.w, height: 60.h)),
-                  ],
-                ),
-                SizedBox(height: 20.h),
-              ]),
-            ))));
+              ),
+              SizedBox(width: 45.w),
+              InkWell(
+                  onTap: () {
+                    MagicRouter.navigateTo(const SecondStageScreen());
+                  },
+                  child:
+                      customCard(title: 'الثانية', width: 120.w, height: 60.h)),
+            ],
+          ),
+          SizedBox(height: 20.h),
+        ]))));
   }
 }
 

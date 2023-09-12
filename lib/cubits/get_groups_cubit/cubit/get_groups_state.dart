@@ -1,6 +1,6 @@
 part of 'get_groups_cubit.dart';
 
-sealed class GetGroupsState extends Equatable {
+abstract class GetGroupsState extends Equatable {
   const GetGroupsState();
 
   @override

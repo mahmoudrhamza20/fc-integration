@@ -1,6 +1,6 @@
 part of 'stages_cubit.dart';
 
-sealed class StagesState extends Equatable {
+abstract class StagesState extends Equatable {
   const StagesState();
 
   @override

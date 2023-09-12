@@ -26,7 +26,7 @@ class GetGroupsCubit extends Cubit<GetGroupsState> {
         emit(GetGroupsErrors());
       },
       (res) async {
-        // showSnackBar(res.message);
+        showSnackBar(res.message);
         groupData = res.data.groups;
 
         emit(GetGroupsLoaded());

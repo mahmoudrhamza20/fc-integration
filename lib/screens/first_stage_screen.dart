@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
+import 'package:shared/core/utils/magic_router.dart';
+import 'package:shared/screens/suggesion_group_details.dart';
 import 'package:shared/widgets/custom_button.dart';
 
 import '../widgets/custom_text_field.dart';
@@ -66,9 +68,13 @@ class FirstStageScreen extends StatelessWidget {
               style: TextStyle(fontSize: 16.sp, color: BrandColors.primary),
             ),
             SizedBox(height: 10.h),
-            Text(
-              "1205",
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            InkWell(
+              onTap: () =>
+                  MagicRouter.navigateTo(const SuggesionGroupDetailsScreen()),
+              child: Text(
+                "1205",
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+              ),
             ),
             Text(
               "1205",

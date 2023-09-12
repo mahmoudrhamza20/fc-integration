@@ -14,7 +14,7 @@ class StagesCubit extends Cubit<StagesState> {
 
   static StagesCubit of(context) => StagesCubit.of(context);
 
-  Future getGroups() async {
+  Future getStages() async {
     emit(StagesLoading());
     final res = await getStagesRepo.getStages();
     res.fold(
