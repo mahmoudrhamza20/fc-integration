@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/screens/my_groups_screen.dart';
+import 'package:shared/screens/second_privacy_screen.dart';
 import 'package:shared/screens/subscribe_group.dart';
 import 'package:shared/widgets/custom_profile_bar.dart';
 
@@ -49,8 +50,14 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             SizedBox(height: 20.h),
-            Text("طلب تأسيس مجموعة جديدة",
-                style: TextStyle(color: BrandColors.primary, fontSize: 16.sp)),
+            InkWell(
+              onTap: () {
+                MagicRouter.navigateTo(const SecondPrivacyScreen());
+              },
+              child: Text("طلب تأسيس مجموعة جديدة",
+                  style:
+                      TextStyle(color: BrandColors.primary, fontSize: 16.sp)),
+            ),
           ],
         ),
       ),

@@ -66,6 +66,23 @@ class GroupDetails extends StatelessWidget {
                   customCard(
                       title: 'الترتيب الحالي', width: 300.w, height: 60.h),
                   SizedBox(height: 20.h),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: customCard(
+                              title: 'العملة', width: 50.w, height: 60.h),
+                        ),
+                        Expanded(
+                          child: customCard(
+                              title: 'السعر', width: 50.w, height: 60.h),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
                   Text(
                     "الأكواد المتاحة",
                     style: TextStyle(
