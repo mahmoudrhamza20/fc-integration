@@ -5,7 +5,6 @@ import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/core/utils/validator.dart';
 import 'package:shared/screens/accept_join_to_group.dart';
-import 'package:shared/widgets/custom_card.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 

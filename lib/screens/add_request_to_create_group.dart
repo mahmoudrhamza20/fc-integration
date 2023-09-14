@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
-import 'package:shared/cubits/terms_cubit/cubit/terms_cubit.dart';
 import 'package:shared/screens/home_screen.dart';
 import 'package:shared/widgets/custom_button.dart';
-
-import '../core/utils/parse_html.dart';
 
 class AddRequestToCreateGroupScreen extends StatelessWidget {
   const AddRequestToCreateGroupScreen({super.key});

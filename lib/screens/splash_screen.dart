@@ -223,8 +223,8 @@ class SecondPage extends StatelessWidget {
                                   code: 'EG',
                                   dialCode: '20',
                                   nameTranslations: {},
-                                  minLength: 10,
-                                  maxLength: 10),
+                                  minLength: 12,
+                                  maxLength: 12),
                               Country(
                                   flag: '🇧🇭',
                                   name: 'البحرين',

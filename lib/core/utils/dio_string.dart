@@ -11,8 +11,18 @@ class EndPoints {
   static const String terms = 'terms';
   static const String groups = 'groups';
   static const String stages = 'stages';
+  static const String search = 'search';
   static const String searchKeywords = 'groupNumber?numbers=2';
+
   static String groupById({required int id}) {
     return 'groups/$id';
   }
+
+  static String stageById({required int id}) {
+    return 'stages/$id';
+  }
+
+  // static String searchKeywords({required int id}) {
+  //   return 'groupNumber?numbers=$id';
+  // }
 }

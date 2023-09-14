@@ -14,3 +14,9 @@ final class StagesError extends StagesState {}
 final class StagesLoading extends StagesState {}
 
 final class StagesLoaded extends StagesState {}
+
+final class StagesByIdError extends StagesState {}
+
+final class StagesByIdLoading extends StagesState {}
+
+final class StagesByIdLoaded extends StagesState {}

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
 import 'package:shared/cubits/register_cubit.dart/cubit/register_cubit.dart';
+
 import 'package:shared/firebase_options.dart';
 import 'package:shared/screens/splash_screen.dart';
 import 'package:shared/translations/codegen_loader.g.dart';

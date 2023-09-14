@@ -3,11 +3,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
-import 'package:shared/core/utils/validator.dart';
 import 'package:shared/screens/home_screen.dart';
-import 'package:shared/widgets/custom_card.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text_field.dart';
 
 class AcceptJoinToGroupScreen extends StatelessWidget {
   const AcceptJoinToGroupScreen({super.key});

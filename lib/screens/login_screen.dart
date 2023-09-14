@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/hex_color.dart';
 import 'package:shared/core/utils/magic_router.dart';
@@ -72,18 +75,117 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: BrandColors.primary),
                             ),
                             SizedBox(height: 5.w),
-                            customTextField(
-                                startIcon: const Icon(Icons.phone),
-                                isPassword: false,
-                                validator: (value) =>
-                                    Validator.generalField(value),
-                                type: TextInputType.phone,
-                                controller: cubit.phoneController,
-                                hintText: 'برجاء ادخال رقم الهاتف',
-                                endIcon: null),
-                            SizedBox(
-                              height: 10.h,
+                            IntlPhoneField(
+                              controller: cubit.phoneController,
+                              keyboardType: TextInputType.phone,
+                              pickerDialogStyle: PickerDialogStyle(
+                                  searchFieldInputDecoration:
+                                      const InputDecoration(
+                                          hintText: 'أبحث عن البلد')),
+                              languageCode: "ar",
+                              countries: const [
+                                Country(
+                                    flag: '🇪🇬',
+                                    name: 'مصر',
+                                    code: 'EG',
+                                    dialCode: '20',
+                                    nameTranslations: {},
+                                    minLength: 12,
+                                    maxLength: 12),
+                                Country(
+                                    flag: '🇧🇭',
+                                    name: 'البحرين',
+                                    code: 'BH',
+                                    dialCode: '973',
+                                    nameTranslations: {},
+                                    minLength: 8,
+                                    maxLength: 8),
+                                Country(
+                                    flag: '🇯🇴',
+                                    name: 'الاردن',
+                                    code: 'JO',
+                                    dialCode: '962',
+                                    nameTranslations: {},
+                                    minLength: 9,
+                                    maxLength: 9),
+                                Country(
+                                    flag: '🇰🇼',
+                                    name: 'الكويت',
+                                    code: 'KW',
+                                    dialCode: '965',
+                                    nameTranslations: {},
+                                    minLength: 8,
+                                    maxLength: 8),
+                                Country(
+                                    flag: '🇶🇦',
+                                    name: 'قطر',
+                                    code: 'QA',
+                                    dialCode: '974',
+                                    nameTranslations: {},
+                                    minLength: 8,
+                                    maxLength: 8),
+                                Country(
+                                    flag: '🇸🇦',
+                                    name: 'المملكة العربية السعودية',
+                                    code: 'SA',
+                                    dialCode: '966',
+                                    nameTranslations: {},
+                                    minLength: 9,
+                                    maxLength: 9),
+                                Country(
+                                    flag: '🇦🇪',
+                                    name: 'الإمارات العربية المتحدة',
+                                    code: 'AE',
+                                    dialCode: '971',
+                                    nameTranslations: {},
+                                    minLength: 9,
+                                    maxLength: 9),
+                              ],
+                              decoration: InputDecoration(
+                                // fillColor: HexColor('#F7F8F8'),
+                                // labelText: 'رقم الهاتف',
+                                // border: const OutlineInputBorder(
+                                //   borderRadius: BorderRadius.all(Radius.circular(15)),
+                                //   borderSide: BorderSide(),
+                                // ),
+                                errorStyle:
+                                    const TextStyle(color: BrandColors.primary),
+                                contentPadding: EdgeInsets.all(16.w),
+                                isDense: true,
+                                filled: true,
+                                fillColor: HexColor('#F7F8F8'),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(14.r),
+                                  borderSide: const BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14.r),
+                                    borderSide: const BorderSide(
+                                        width: 1, color: BrandColors.primary)),
+                                hintMaxLines: 1,
+                                hintText: 'رقم الهاتف',
+                                hintStyle: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily: 'Poppins',
+                                    color: HexColor('#B5B5B5')),
+                              ),
+                              initialCountryCode: 'EG',
+                              onChanged: (phone) {
+                                // print(phone.completeNumber);
+                              },
                             ),
+                            // customTextField(
+                            //     startIcon: const Icon(Icons.phone),
+                            //     isPassword: false,
+                            //     validator: (value) =>
+                            //         Validator.generalField(value),
+                            //     type: TextInputType.phone,
+                            //     controller: cubit.phoneController,
+                            //     hintText: 'برجاء ادخال رقم الهاتف',
+                            //     endIcon: null),
                             Text(
                               "كلمة المرور",
                               style: TextStyle(

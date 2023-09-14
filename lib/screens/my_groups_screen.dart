@@ -6,7 +6,6 @@ import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/cubits/get_groups_cubit/cubit/get_groups_cubit.dart';
 import 'package:shared/models/get_groubs_model.dart';
-import 'package:shared/models/group_by_id_model.dart';
 import 'package:shared/screens/group_details.dart';
 import 'package:shared/screens/subscribe_group.dart';
 import 'package:shared/widgets/custom_button.dart';

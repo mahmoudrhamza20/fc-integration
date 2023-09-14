@@ -11,12 +11,14 @@ Widget customTextField(
     bool readOnly = false,
     VoidCallback? onPressed,
     VoidCallback? onTap,
+    void Function(String)? onChanged,
     required TextEditingController controller,
     required TextInputType type,
     Function(String)? validator}) {
   return TextFormField(
     validator: (value) => validator!(value!),
     onTap: onTap,
+    onChanged: onChanged,
     style: const TextStyle(color: Colors.black),
     obscureText: isPassword,
     controller: controller,
