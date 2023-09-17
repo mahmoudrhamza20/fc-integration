@@ -6,6 +6,8 @@ import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/core/utils/dio_helper.dart';
 import 'package:shared/core/utils/dio_string.dart';
 import 'package:shared/models/error_model.dart';
+import 'package:shared/models/join_goup_error_model.dart';
+import 'package:shared/models/join_goup_model.dart';
 import 'package:shared/models/search_error_model.dart';
 import 'package:shared/models/search_model.dart';
 import 'package:shared/models/stage_by_id_model.dart';
@@ -78,6 +80,38 @@ class GetStagesRepo {
         return Left(SearchErrorModel.fromJson(jsonDecode(response.toString()))
             .message
             .toString());
+      }
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+// inser model
+  Future<Either<String, JoinGroupModel>> joinGroup({
+    required dynamic groupId,
+    required String code,
+    required dynamic oldUser,
+  }) async {
+    final response = await DioHelper.post(EndPoints.joinGroup, body: {
+      'group_id': groupId,
+      'old_user': oldUser,
+      'code': code,
+    }, headers: {
+      'Accept-Language': 'ar',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${AppStorage.getToken}'
+    });
+
+    try {
+      if (response.statusCode == 200 && response.data['result'] == true) {
+        print("Success getGroupsById");
+        print(response.data);
+        return Right(JoinGroupModel.fromJson(jsonDecode(response.toString())));
+      } else {
+        return Left(
+            JoinGroupErrorModel.fromJson(jsonDecode(response.toString()))
+                .message
+                .toString());
       }
     } catch (e) {
       return Left(e.toString());

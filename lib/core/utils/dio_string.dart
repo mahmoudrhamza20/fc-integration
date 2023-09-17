@@ -12,6 +12,7 @@ class EndPoints {
   static const String groups = 'groups';
   static const String stages = 'stages';
   static const String search = 'search';
+  static const String joinGroup = 'joinGroup';
   static const String searchKeywords = 'groupNumber?numbers=2';
 
   static String groupById({required int id}) {

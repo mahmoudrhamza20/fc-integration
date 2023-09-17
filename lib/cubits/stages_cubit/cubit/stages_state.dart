@@ -20,3 +20,9 @@ final class StagesByIdError extends StagesState {}
 final class StagesByIdLoading extends StagesState {}
 
 final class StagesByIdLoaded extends StagesState {}
+
+final class JoinGroupError extends StagesState {}
+
+final class JoinGroupLoading extends StagesState {}
+
+final class JoinGroupeLoaded extends StagesState {}

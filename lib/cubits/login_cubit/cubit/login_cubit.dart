@@ -53,7 +53,7 @@ class LoginCubit extends Cubit<LoginState> {
           await AppStorage.cacheToken(res.data.token!);
           await AppStorage.cacheUserInfo(res);
           log('-----------------');
-          print(userData!.name);
+          print(userData!.id);
           log(AppStorage.getToken!);
           log('-----------------');
           MagicRouter.navigateAndPopAll(const HomeScreen());

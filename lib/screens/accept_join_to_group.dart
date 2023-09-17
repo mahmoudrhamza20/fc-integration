@@ -5,9 +5,13 @@ import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/screens/home_screen.dart';
 
-class AcceptJoinToGroupScreen extends StatelessWidget {
-  const AcceptJoinToGroupScreen({super.key});
+import '../models/join_goup_model.dart';
 
+class AcceptJoinToGroupScreen extends StatelessWidget {
+  const AcceptJoinToGroupScreen(
+      {super.key, required this.joinGroupData, required this.codes});
+  final JoinGroup joinGroupData;
+  final List<String> codes;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +40,10 @@ class AcceptJoinToGroupScreen extends StatelessWidget {
               'تم الإشتراك بالمجموعة ',
               style: TextStyle(color: BrandColors.primary, fontSize: 18),
             ),
-            const Text(
-              'للمرحلة (الأولى)',
-              style: TextStyle(color: BrandColors.primary, fontSize: 18),
+            Text(
+              joinGroupData.stage,
+              // 'للمرحلة (الأولى)',
+              style: const TextStyle(color: BrandColors.primary, fontSize: 18),
             ),
             const Text(
               'مجموعة الأكواد الخاصة بك',
@@ -48,11 +53,12 @@ class AcceptJoinToGroupScreen extends StatelessWidget {
             SizedBox(
               height: 200,
               child: ListView.builder(
-                  itemCount: 3,
+                  itemCount: codes.length,
                   itemBuilder: (context, index) {
                     return Center(
                       child: Text(
-                        '${index + 111}',
+                        codes[index],
+                        // '${index + 111}',
                         style: const TextStyle(
                             color: BrandColors.primary, fontSize: 18),
                       ),

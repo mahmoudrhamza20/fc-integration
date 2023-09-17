@@ -20,30 +20,50 @@ class SuggesionGroupDetailsScreen extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         body: SafeArea(
-          child: Column(children: [
-            ClipPath(
-              clipper: WaveClipperTwo(),
-              child: Container(
-                height: 100,
-                color: BrandColors.primary,
+          child: SingleChildScrollView(
+            child: Column(children: [
+              ClipPath(
+                clipper: WaveClipperTwo(),
+                child: Container(
+                  height: 100,
+                  color: BrandColors.primary,
+                ),
               ),
-            ),
-            SizedBox(height: 20.h),
-            customCard(title: searchGroup.stage, width: 300.w, height: 60.h),
-            customCard(
-                title: searchGroup.groupNumber.toString(),
-                width: 300.w,
-                height: 60.h),
-            customCard(
-                title: searchGroup.user.name, width: 300.w, height: 60.h),
-            customCard(
-                title: searchGroup.user.phone, width: 300.w, height: 60.h),
-            SizedBox(height: 20.h),
-            customButton(
-                text: 'التالي',
-                onTap: () => MagicRouter.navigateTo(const CodeSentScreen()),
-                context: context),
-          ]),
+              SizedBox(height: 20.h),
+              customCard(title: searchGroup.stage, width: 300.w, height: 60.h),
+              customCard(
+                  title: searchGroup.groupNumber.toString(),
+                  width: 300.w,
+                  height: 60.h),
+              customCard(
+                  title: searchGroup.user.name, width: 300.w, height: 60.h),
+              customCard(
+                  title: searchGroup.user.phone, width: 300.w, height: 60.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: customCard(
+                          title: 'العملة', width: 50.w, height: 60.h),
+                    ),
+                    Expanded(
+                      child:
+                          customCard(title: 'السعر', width: 50.w, height: 60.h),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.h),
+              customButton(
+                  text: 'التالي',
+                  onTap: () => MagicRouter.navigateTo(CodeSentScreen(
+                        searchGroup: searchGroup,
+                      )),
+                  context: context),
+            ]),
+          ),
         ));
   }
 }
