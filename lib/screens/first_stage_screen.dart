@@ -78,13 +78,16 @@ class FirstStageScreen extends StatelessWidget {
                           type: TextInputType.number),
                     ),
                     SizedBox(height: 20.h),
-                    customButton(
-                        text: 'البحث',
-                        onTap: () {
-                          cubit.searchInStage(groupNumber: codeController.text);
-                          print(codeController.text);
-                        },
-                        context: context),
+                    state is SearchInStageLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : customButton(
+                            text: 'البحث',
+                            onTap: () {
+                              cubit.searchInStage(
+                                  groupNumber: codeController.text);
+                              print(codeController.text);
+                            },
+                            context: context),
                     const SizedBox(
                       height: 20,
                     ),
@@ -105,8 +108,7 @@ class FirstStageScreen extends StatelessWidget {
                                               cubit.searchData!.groups[index],
                                         )),
                                         child: Text(
-                                          cubit.searchGroup![index].groupNumber
-                                              .toString(),
+                                          cubit.searchGroup![index].groupNumber,
                                           style: TextStyle(
                                               fontSize: 16.sp,
                                               fontWeight: FontWeight.bold),
@@ -120,15 +122,6 @@ class FirstStageScreen extends StatelessWidget {
                           fontSize: 16.sp, color: BrandColors.primary),
                     ),
                     SizedBox(height: 10.h),
-                    // InkWell(
-                    //   onTap: () =>
-                    //       MagicRouter.navigateTo(const SuggesionGroupDetailsScreen()),
-                    //   child: Text(
-                    //     "1205",
-                    //     style:
-                    //         TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 150,
                       child: ListView.builder(

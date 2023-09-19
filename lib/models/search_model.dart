@@ -56,7 +56,7 @@ class SearchData {
 
 class SearchGroup {
   int id;
-  int groupNumber;
+  dynamic groupNumber;
   String name;
   String stage;
   User user;

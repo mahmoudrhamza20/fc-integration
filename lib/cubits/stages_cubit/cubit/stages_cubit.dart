@@ -18,6 +18,7 @@ class StagesCubit extends Cubit<StagesState> {
   late List<Stage>? stage = [];
   StageId? stageById;
   List<SearchGroup>? searchGroup = [];
+  SearchGroup? searchGroup2;
   SearchData? searchData;
   late List<SuggestedGroup>? suggestedGroup = [];
   GetStagesByIdData? stagesByIdData;
@@ -67,19 +68,22 @@ class StagesCubit extends Cubit<StagesState> {
   }
 
   Future searchInStage({required String groupNumber}) async {
-    emit(StagesByIdLoading());
+    emit(SearchInStageLoading());
     final res = await getStagesRepo.searchInStage(groupNumber: groupNumber);
     res.fold(
       (err) {
         showSnackBar(err);
-        emit(StagesByIdError());
+        emit(SearchInStageError());
       },
       (res) async {
         showSnackBar(res.message);
         searchGroup = res.data.groups;
         searchData = res.data;
-        print(searchGroup);
-        emit(StagesByIdLoaded());
+        print('///////////////////////');
+        // print(searchGroup2!.id);
+        // print(searchGroup2!.user.id);
+        print('///////////////////////');
+        emit(SearchInStageLoaded());
       },
     );
   }
@@ -101,6 +105,7 @@ class StagesCubit extends Cubit<StagesState> {
           showSnackBar(res.message);
           codes = res.data.codes;
           joinGroupData = res.data.group;
+
           MagicRouter.navigateTo(AcceptJoinToGroupScreen(
             joinGroupData: joinGroupData!,
             codes: codes!,

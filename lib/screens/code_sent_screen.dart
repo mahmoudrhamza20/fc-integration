@@ -70,6 +70,10 @@ class CodeSentScreen extends StatelessWidget {
                                 cubit.joinGroup(
                                     groupId: searchGroup.id,
                                     oldUser: searchGroup.user.id);
+                                print(
+                                  searchGroup.id,
+                                );
+                                print(searchGroup.user.id);
                                 // if (
                                 //   formKey.currentState!.validate()) {
                                 //   MagicRouter.navigateTo(const AcceptJoinToGroupScreen());

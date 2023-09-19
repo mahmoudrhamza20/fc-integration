@@ -21,6 +21,12 @@ final class StagesByIdLoading extends StagesState {}
 
 final class StagesByIdLoaded extends StagesState {}
 
+final class SearchInStageError extends StagesState {}
+
+final class SearchInStageLoading extends StagesState {}
+
+final class SearchInStageLoaded extends StagesState {}
+
 final class JoinGroupError extends StagesState {}
 
 final class JoinGroupLoading extends StagesState {}
