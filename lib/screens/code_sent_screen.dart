@@ -69,11 +69,11 @@ class CodeSentScreen extends StatelessWidget {
                               onTap: () {
                                 cubit.joinGroup(
                                     groupId: searchGroup.id,
-                                    oldUser: searchGroup.user.id);
+                                    oldUser: searchGroup.founder.id);
                                 print(
                                   searchGroup.id,
                                 );
-                                print(searchGroup.user.id);
+                                print(searchGroup.founder.id);
                                 // if (
                                 //   formKey.currentState!.validate()) {
                                 //   MagicRouter.navigateTo(const AcceptJoinToGroupScreen());

@@ -13,6 +13,7 @@ class GetGroupsCubit extends Cubit<GetGroupsState> {
 
   final getGroupsRepo = GetGroupsRepo();
   late List<Group>? groupData = [];
+  List<dynamic>? codes = [];
   String? searchKeywordsData2;
   late GroupById? groupById;
   static GetGroupsCubit of(context) => BlocProvider.of(context);
@@ -45,6 +46,7 @@ class GetGroupsCubit extends Cubit<GetGroupsState> {
       (res) async {
         showSnackBar(res.message);
         groupById = res.data.group;
+        codes = res.data.codes;
         emit(GetGroupsIdLoaded());
       },
     );

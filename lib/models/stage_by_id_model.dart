@@ -66,23 +66,35 @@ class StageId {
   dynamic id;
   dynamic name;
   dynamic value;
+  String currency;
+  bool isCurrent;
+  bool isDone;
 
   StageId({
     required this.id,
     required this.name,
     required this.value,
+    required this.currency,
+    required this.isCurrent,
+    required this.isDone,
   });
 
   factory StageId.fromJson(Map<String, dynamic> json) => StageId(
         id: json["id"],
         name: json["name"],
         value: json["value"],
+        currency: json["currency"],
+        isCurrent: json["is_current"],
+        isDone: json["is_done"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "value": value,
+        "currency": currency,
+        "is_current": isCurrent,
+        "is_done": isDone,
       };
 }
 

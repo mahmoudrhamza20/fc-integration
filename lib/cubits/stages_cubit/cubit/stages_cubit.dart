@@ -18,7 +18,7 @@ class StagesCubit extends Cubit<StagesState> {
   late List<Stage>? stage = [];
   StageId? stageById;
   List<SearchGroup>? searchGroup = [];
-  SearchGroup? searchGroup2;
+  //SearchGroup? searchGroup2;
   SearchData? searchData;
   late List<SuggestedGroup>? suggestedGroup = [];
   GetStagesByIdData? stagesByIdData;

@@ -36,9 +36,9 @@ class AcceptJoinToGroupScreen extends StatelessWidget {
               'مبروك',
               style: TextStyle(color: BrandColors.primary, fontSize: 18),
             ),
-            const Text(
-              'تم الإشتراك بالمجموعة ',
-              style: TextStyle(color: BrandColors.primary, fontSize: 18),
+            Text(
+              'تم الإشتراك  في ${joinGroupData.name} ',
+              style: const TextStyle(color: BrandColors.primary, fontSize: 18),
             ),
             Text(
               joinGroupData.stage,

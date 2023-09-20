@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final searchModel = searchModelFromJson(jsonString);
-
 import 'dart:convert';
 
 SearchModel searchModelFromJson(String str) =>
@@ -56,17 +52,17 @@ class SearchData {
 
 class SearchGroup {
   int id;
-  dynamic groupNumber;
+  String groupNumber;
   String name;
   String stage;
-  User user;
+  Founder founder;
 
   SearchGroup({
     required this.id,
     required this.groupNumber,
     required this.name,
     required this.stage,
-    required this.user,
+    required this.founder,
   });
 
   factory SearchGroup.fromJson(Map<String, dynamic> json) => SearchGroup(
@@ -74,7 +70,7 @@ class SearchGroup {
         groupNumber: json["group_number"],
         name: json["name"],
         stage: json["stage"],
-        user: User.fromJson(json["user"]),
+        founder: Founder.fromJson(json["founder"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,22 +78,22 @@ class SearchGroup {
         "group_number": groupNumber,
         "name": name,
         "stage": stage,
-        "user": user.toJson(),
+        "founder": founder.toJson(),
       };
 }
 
-class User {
+class Founder {
   int id;
   String name;
   String phone;
 
-  User({
+  Founder({
     required this.id,
     required this.name,
     required this.phone,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory Founder.fromJson(Map<String, dynamic> json) => Founder(
         id: json["id"],
         name: json["name"],
         phone: json["phone"],

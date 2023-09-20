@@ -93,10 +93,26 @@ class GroupDetails extends StatelessWidget {
                   SizedBox(height: 20.h),
                   state is SearchKeywordsLoading
                       ? const CircularProgressIndicator()
-                      : Text(
-                          cubit.searchKeywordsData2 ?? '',
-                          style: const TextStyle(fontSize: 16),
+                      : SizedBox(
+                          height: 200,
+                          child: ListView.builder(
+                              itemCount: cubit.codes!.length,
+                              itemBuilder: (context, index) {
+                                return Center(
+                                  child: Text(
+                                    cubit.codes![index],
+                                    // '${index + 111}',
+                                    style: const TextStyle(
+                                        color: BrandColors.primary,
+                                        fontSize: 18),
+                                  ),
+                                );
+                              }),
                         ),
+                  // Text(
+                  //     cubit.searchKeywordsData2 ?? '',
+                  //     style: const TextStyle(fontSize: 16),
+                  //   ),
                   // const Text(
                   //   'EG27L12158',
                   //   style: TextStyle(fontSize: 16),

@@ -36,9 +36,9 @@ class SuggesionGroupDetailsScreen extends StatelessWidget {
                   width: 300.w,
                   height: 60.h),
               customCard(
-                  title: searchGroup.user.name, width: 300.w, height: 60.h),
+                  title: searchGroup.founder.name, width: 300.w, height: 60.h),
               customCard(
-                  title: searchGroup.user.phone, width: 300.w, height: 60.h),
+                  title: searchGroup.founder.phone, width: 300.w, height: 60.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
