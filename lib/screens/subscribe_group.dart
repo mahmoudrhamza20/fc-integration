@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/cubits/stages_cubit/cubit/stages_cubit.dart';
-import 'package:shared/models/stage_by_id_model.dart';
 import 'package:shared/models/stages_model.dart';
 import 'package:shared/screens/first_stage_screen.dart';
 import 'package:shared/widgets/custom_card.dart';

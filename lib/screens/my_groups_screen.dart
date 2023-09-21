@@ -254,10 +254,8 @@ class BuildRow extends StatelessWidget {
     super.key,
     required this.index,
     required this.groupData,
-    //required this.groupById,
   });
   final int index;
-  // final GroupById groupById;
   final Group groupData;
   @override
   Widget build(BuildContext context) {

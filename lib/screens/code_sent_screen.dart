@@ -10,9 +10,15 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 
 class CodeSentScreen extends StatelessWidget {
-  const CodeSentScreen({super.key, required this.searchGroup});
+  const CodeSentScreen({
+    super.key,
+    required this.groupId,
+    required this.founderId,
+  });
 
-  final SearchGroup searchGroup;
+  final int groupId;
+  final int founderId;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,12 +74,11 @@ class CodeSentScreen extends StatelessWidget {
                               text: 'التالي',
                               onTap: () {
                                 cubit.joinGroup(
-                                    groupId: searchGroup.id,
-                                    oldUser: searchGroup.founder.id);
+                                    groupId: groupId, oldUser: founderId);
                                 print(
-                                  searchGroup.id,
+                                  groupId,
                                 );
-                                print(searchGroup.founder.id);
+                                print(founderId);
                                 // if (
                                 //   formKey.currentState!.validate()) {
                                 //   MagicRouter.navigateTo(const AcceptJoinToGroupScreen());

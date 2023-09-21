@@ -104,8 +104,24 @@ class FirstStageScreen extends StatelessWidget {
                                       child: InkWell(
                                         onTap: () => MagicRouter.navigateTo(
                                             SuggesionGroupDetailsScreen(
-                                          searchGroup:
-                                              cubit.searchData!.groups[index],
+                                          // searchGroup:
+                                          //     cubit.searchData!.groups[index],
+                                          stage: cubit
+                                              .searchData!.groups[index].stage,
+                                          groupNumber: cubit.searchData!
+                                              .groups[index].groupNumber,
+                                          founderName: cubit.searchData!
+                                              .groups[index].founder.name,
+                                          founderPhone: cubit.searchData!
+                                              .groups[index].founder.phone,
+                                          currency: cubit.searchData!
+                                              .groups[index].currency,
+                                          value: cubit
+                                              .searchData!.groups[index].value,
+                                          groupId: cubit
+                                              .searchData!.groups[index].id,
+                                          founderId: cubit.searchData!
+                                              .groups[index].founder.id,
                                         )),
                                         child: Text(
                                           cubit.searchGroup![index].groupNumber,
@@ -130,13 +146,25 @@ class FirstStageScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) =>
                             Center(
                           child: InkWell(
-                            // onTap: () => MagicRouter.navigateTo(
-                            //     SuggesionGroupDetailsScreen(
-                            //         searchGroup:
-                            //             cubit.searchData!.groups[index])),
+                            onTap: () => MagicRouter.navigateTo(
+                                SuggesionGroupDetailsScreen(
+                              groupId: cubit.suggestedGroup![index].id,
+                              founderId:
+                                  cubit.suggestedGroup![index].founder.id,
+                              // searchGroup: cubit.searchData!.groups[index],
+                              stage: cubit.suggestedGroup![index].stage,
+                              groupNumber:
+                                  cubit.suggestedGroup![index].groupNumber,
+                              founderName:
+                                  cubit.suggestedGroup![index].founder.name,
+                              founderPhone:
+                                  cubit.suggestedGroup![index].founder.phone,
+                              currency: cubit.suggestedGroup![index].currency,
+                              value: cubit.suggestedGroup![index].value,
+                            )),
                             child: Center(
                               child: Text(
-                                cubit.suggestedGroup![index].groupNumber ?? '',
+                                cubit.suggestedGroup![index].groupNumber,
                                 style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.bold),

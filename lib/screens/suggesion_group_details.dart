@@ -9,8 +9,26 @@ import 'package:shared/widgets/custom_card.dart';
 import '../widgets/custom_button.dart';
 
 class SuggesionGroupDetailsScreen extends StatelessWidget {
-  const SuggesionGroupDetailsScreen({super.key, required this.searchGroup});
-  final SearchGroup searchGroup;
+  const SuggesionGroupDetailsScreen(
+      {super.key,
+      // required this.searchGroup,
+      required this.stage,
+      required this.groupNumber,
+      required this.founderName,
+      required this.founderPhone,
+      required this.currency,
+      required this.value,
+      required this.groupId,
+      required this.founderId});
+  // final SearchGroup searchGroup;
+  final String stage;
+  final String groupNumber;
+  final String founderName;
+  final String founderPhone;
+  final String currency;
+  final dynamic value;
+  final int groupId;
+  final int founderId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,15 +48,11 @@ class SuggesionGroupDetailsScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.h),
-              customCard(title: searchGroup.stage, width: 300.w, height: 60.h),
+              customCard(title: stage, width: 300.w, height: 60.h),
               customCard(
-                  title: searchGroup.groupNumber.toString(),
-                  width: 300.w,
-                  height: 60.h),
-              customCard(
-                  title: searchGroup.founder.name, width: 300.w, height: 60.h),
-              customCard(
-                  title: searchGroup.founder.phone, width: 300.w, height: 60.h),
+                  title: groupNumber.toString(), width: 300.w, height: 60.h),
+              customCard(title: founderName, width: 300.w, height: 60.h),
+              customCard(title: founderPhone, width: 300.w, height: 60.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
@@ -46,16 +60,36 @@ class SuggesionGroupDetailsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: customCard(
-                          title: searchGroup.currency,
-                          width: 50.w,
-                          height: 60.h),
+                          title: currency, width: 50.w, height: 60.h),
                     ),
                     Expanded(
                       child: customCard(
-                          title: searchGroup.value.toString(),
-                          width: 50.w,
-                          height: 60.h),
+                          title: value.toString(), width: 50.w, height: 60.h),
                     )
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.h),
+              SizedBox(
+                width: 240.w,
+                height: 70.h,
+                child: const Column(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    Text(
+                      'ملحوظة ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    Text(
+                      'عليك التواصل مع صاحب المجموعه اولا',
+                      style: TextStyle(color: BrandColors.primary),
+                    ),
+                    Text(
+                      'للحصول علي الكود الخاص بك٫',
+                      // overflow: TextOverflow.ellipsis,
+                      // maxLines: 2,
+                      style: TextStyle(color: BrandColors.primary),
+                    ),
                   ],
                 ),
               ),
@@ -63,7 +97,8 @@ class SuggesionGroupDetailsScreen extends StatelessWidget {
               customButton(
                   text: 'التالي',
                   onTap: () => MagicRouter.navigateTo(CodeSentScreen(
-                        searchGroup: searchGroup,
+                        groupId: groupId,
+                        founderId: founderId,
                       )),
                   context: context),
             ]),
