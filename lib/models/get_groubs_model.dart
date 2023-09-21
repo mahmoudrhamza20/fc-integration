@@ -169,6 +169,8 @@ class Group {
   String groupNumber;
   String name;
   String stage;
+  dynamic value;
+  String currency;
   Founder founder;
 
   Group({
@@ -177,6 +179,8 @@ class Group {
     required this.name,
     required this.stage,
     required this.founder,
+    required this.value,
+    required this.currency,
   });
 
   factory Group.fromJson(Map<String, dynamic> json) => Group(
@@ -184,6 +188,8 @@ class Group {
         groupNumber: json["group_number"],
         name: json["name"],
         stage: json["stage"],
+        value: json["value"],
+        currency: json["currency"],
         founder: Founder.fromJson(json["founder"]),
       );
 
@@ -192,6 +198,8 @@ class Group {
         "group_number": groupNumber,
         "name": name,
         "stage": stage,
+        "value": value,
+        "currency": currency,
         "founder": founder.toJson(),
       };
 }

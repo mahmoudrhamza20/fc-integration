@@ -46,11 +46,15 @@ class SuggesionGroupDetailsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: customCard(
-                          title: 'العملة', width: 50.w, height: 60.h),
+                          title: searchGroup.currency,
+                          width: 50.w,
+                          height: 60.h),
                     ),
                     Expanded(
-                      child:
-                          customCard(title: 'السعر', width: 50.w, height: 60.h),
+                      child: customCard(
+                          title: searchGroup.value.toString(),
+                          width: 50.w,
+                          height: 60.h),
                     )
                   ],
                 ),

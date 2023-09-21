@@ -280,6 +280,8 @@ class BuildRow extends StatelessWidget {
                 groubId: groupData.id,
                 name: groupData.name,
                 stage: groupData.stage,
+                value: groupData.value.toString(),
+                currency: groupData.currency,
               ));
             },
             child: Text(

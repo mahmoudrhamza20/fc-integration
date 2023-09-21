@@ -13,6 +13,8 @@ class GroupDetails extends StatelessWidget {
     required this.name,
     required this.stage,
     required this.groupNumber,
+    required this.value,
+    required this.currency,
     //  required this.groupById
   });
 
@@ -20,6 +22,9 @@ class GroupDetails extends StatelessWidget {
   final String name;
   final String stage;
   final String groupNumber;
+  final dynamic value;
+  final String currency;
+
   //final GroupById groupById;
   @override
   Widget build(BuildContext context) {
@@ -73,11 +78,11 @@ class GroupDetails extends StatelessWidget {
                       children: [
                         Expanded(
                           child: customCard(
-                              title: 'العملة', width: 50.w, height: 60.h),
+                              title: currency, width: 50.w, height: 60.h),
                         ),
                         Expanded(
                           child: customCard(
-                              title: 'السعر', width: 50.w, height: 60.h),
+                              title: value, width: 50.w, height: 60.h),
                         )
                       ],
                     ),

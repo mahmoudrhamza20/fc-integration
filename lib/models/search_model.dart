@@ -55,6 +55,8 @@ class SearchGroup {
   String groupNumber;
   String name;
   String stage;
+  dynamic value;
+  String currency;
   Founder founder;
 
   SearchGroup({
@@ -63,6 +65,8 @@ class SearchGroup {
     required this.name,
     required this.stage,
     required this.founder,
+    required this.value,
+    required this.currency,
   });
 
   factory SearchGroup.fromJson(Map<String, dynamic> json) => SearchGroup(
@@ -70,6 +74,8 @@ class SearchGroup {
         groupNumber: json["group_number"],
         name: json["name"],
         stage: json["stage"],
+        value: json["value"],
+        currency: json["currency"],
         founder: Founder.fromJson(json["founder"]),
       );
 
@@ -78,6 +84,8 @@ class SearchGroup {
         "group_number": groupNumber,
         "name": name,
         "stage": stage,
+        "value": value,
+        "currency": currency,
         "founder": founder.toJson(),
       };
 }
