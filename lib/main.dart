@@ -27,10 +27,11 @@ void main() async {
   await AppStorage.init();
 
   runApp(EasyLocalization(
-      supportedLocales: const [Locale('ar'), Locale('en')],
+      // supportedLocales: const [Locale('ar'), Locale('en')],
+      supportedLocales: const [Locale('ar')],
       assetLoader: const CodegenLoader(),
       path: 'assets/translations',
-      fallbackLocale: const Locale('en'),
+      fallbackLocale: const Locale('ar'),
       child: const MyApp()));
 }
 
@@ -64,7 +65,7 @@ class _MyAppState extends State<MyApp> {
             navigatorKey: navigatorKey,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
-            locale: context.locale,
+            locale: const Locale('ar'),
             debugShowCheckedModeBanner: false,
             title: 'Fc',
             theme: ThemeData(

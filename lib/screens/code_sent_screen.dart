@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/validator.dart';
 import 'package:shared/cubits/stages_cubit/cubit/stages_cubit.dart';
-import '../models/search_model.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 
@@ -63,7 +62,7 @@ class CodeSentScreen extends StatelessWidget {
                                 hintText: 'الكود',
                                 isPassword: false,
                                 controller: cubit.codeController,
-                                type: TextInputType.number),
+                                type: TextInputType.text),
                           ),
                         ),
                       ),

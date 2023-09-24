@@ -18,6 +18,7 @@ Widget customTextField(
   return TextFormField(
     validator: (value) => validator!(value!),
     onTap: onTap,
+    //textDirection: TextDirection.rtl,
     onChanged: onChanged,
     style: const TextStyle(color: Colors.black),
     obscureText: isPassword,

@@ -3,7 +3,6 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
-import 'package:shared/models/search_model.dart';
 import 'package:shared/screens/code_sent_screen.dart';
 import 'package:shared/widgets/custom_card.dart';
 import '../widgets/custom_button.dart';

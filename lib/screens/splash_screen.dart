@@ -207,8 +207,9 @@ class SecondPage extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         Directionality(
-                          textDirection: TextDirection.ltr,
+                          textDirection: TextDirection.rtl,
                           child: IntlPhoneField(
+                            textAlign: TextAlign.end,
                             controller: cubit.checkPhoneController,
                             keyboardType: TextInputType.phone,
                             pickerDialogStyle: PickerDialogStyle(

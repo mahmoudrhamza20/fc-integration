@@ -1,12 +1,8 @@
 // ignore_for_file: avoid_print
 import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
-
 import 'package:shared/core/utils/dio_string.dart';
-
 import 'package:shared/models/user_error_model.dart';
-
 import '../../../../core/utils/dio_helper.dart';
 import '../models/user_model.dart';
 
@@ -57,9 +53,14 @@ class RegisterRepo {
         print(response.data);
         return Right(UserModel.fromJson(jsonDecode(response.toString())));
       } else {
-        return Left(UserModeError.fromJson(jsonDecode(response.toString()))
-            .message
-            .toString());
+        final error = UserModeError.fromJson(jsonDecode(response.toString()));
+        final errorMessages =
+            error.errors.map((error) => error.toString()).toList();
+        return Left(errorMessages.join('\n'));
+        //   return Left(UserModeError.fromJson(jsonDecode(response.toString()))
+        //       .errors[0]
+        //       .phone
+        //       .toString());
       }
     } catch (e) {
       return Left(e.toString());

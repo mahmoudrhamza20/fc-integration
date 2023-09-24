@@ -79,7 +79,7 @@ class LoginCubit extends Cubit<LoginState> {
           showSnackBar(res.message);
           MagicRouter.navigateTo(
               VerificationCodeScreen(phone: checkPhoneController.text));
-
+          checkPhoneController.clear();
           emit(CheckPhoneLoaded());
         },
       );
@@ -103,6 +103,7 @@ class LoginCubit extends Cubit<LoginState> {
           showSnackBar(res.message);
           MagicRouter.navigateAndPopAll(
               CompleteProfileScreen(phone: checkPhoneController.text));
+          checkOtpController.clear();
           emit(CheckOtpLoaded());
         },
       );

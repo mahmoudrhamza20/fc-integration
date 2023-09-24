@@ -6,6 +6,7 @@ import 'package:shared/core/utils/dio_helper.dart';
 import 'package:shared/core/utils/dio_string.dart';
 import 'package:shared/models/check_otb_error_model.dart';
 import 'package:shared/models/check_otb_model.dart';
+import 'package:shared/models/check_phone_error_model.dart';
 import 'package:shared/models/check_phone_model.dart';
 import 'package:shared/models/error_model.dart';
 
@@ -31,9 +32,11 @@ class CheckPhoneRepo {
             .message
             .toString());
       } else {
-        return Left(ErrorModel.fromJson(jsonDecode(response.toString()))
-            .message
-            .toString());
+        return Left(
+            CheckPhoneErrorModel.fromJson(jsonDecode(response.toString()))
+                .errors[0]
+                .phone
+                .toString());
       }
     } catch (e) {
       return Left(e.toString());

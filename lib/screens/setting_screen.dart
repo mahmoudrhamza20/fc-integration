@@ -4,6 +4,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/magic_router.dart';
+import 'package:shared/core/widgets/custom_snackbar.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
 import 'package:shared/screens/faqs_screen.dart';
 import 'package:shared/screens/social_media_screen.dart';
@@ -69,15 +70,15 @@ class SettingScreen extends StatelessWidget {
             ),
             ProfileMenu(
               text: "تغير اللغة",
-              press: () => {},
+              press: () => showSnackBar('قريبا'),
             ),
             ProfileMenu(
               text: "تغير كلمة السر",
-              press: () {},
+              press: () => showSnackBar('قريبا'),
             ),
             ProfileMenu(
               text: "خدمة العملاء والدعم الفني",
-              press: () {},
+              press: () => showSnackBar('قريبا'),
             ),
             ProfileMenu(
               text: "وسائل التواصل الاجتماعي",
