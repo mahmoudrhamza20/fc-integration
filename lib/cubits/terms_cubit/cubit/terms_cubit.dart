@@ -23,7 +23,7 @@ class TermsCubit extends Cubit<TermsState> {
         emit(TermsError());
       },
       (res) async {
-        showSnackBar(res.message);
+        // showSnackBar(res.message);
         termsData = res.data;
 
         emit(TermsLoaded());

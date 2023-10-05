@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:shared/core/utils/dio_helper.dart';
@@ -8,7 +7,6 @@ import 'package:shared/models/check_otb_error_model.dart';
 import 'package:shared/models/check_otb_model.dart';
 import 'package:shared/models/check_phone_error_model.dart';
 import 'package:shared/models/check_phone_model.dart';
-import 'package:shared/models/error_model.dart';
 
 class CheckPhoneRepo {
   Future<Either<String, CheckPhoneModel>> checkPhone({
@@ -52,18 +50,33 @@ class CheckPhoneRepo {
       'Accept-Language': 'ar',
       'Accept': 'application/json',
     });
-
+    print(phone);
+    print(otp);
     try {
       if (response.statusCode == 200 && response.data['result'] == true) {
         print("Success LogoutRepo");
         print(response.data);
         return Right(CheckOtbModel.fromJson(jsonDecode(response.toString())));
       } else {
-        return Left(CheckOtbErrorModel.fromJson(jsonDecode(response.toString()))
-            .errors[0]
-            .otp
-            .toString());
+        final errorData =
+            CheckOtbErrorModel.fromJson(jsonDecode(response.toString()));
+
+        // Extract the error messages from the list of maps
+        List<String> errorMessages = [];
+        for (var errorItem in errorData.errors) {
+          for (var errorMessage in errorItem.values) {
+            errorMessages.add(errorMessage);
+          }
+        }
+        // Return the concatenated error messages
+        return Left(errorMessages.join('\n'));
       }
+      // else {
+      //   return Left(CheckOtbErrorModel.fromJson(jsonDecode(response.toString()))
+      //       .errors[0]
+      //       .otp
+      //       .toString());
+      // }
     } catch (e) {
       return Left(e.toString());
     }

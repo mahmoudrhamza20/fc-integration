@@ -32,10 +32,19 @@ class LoginRepo {
             .message
             .toString());
       } else {
-        return Left(UserModeError.fromJson(jsonDecode(response.toString()))
-            .errors[0]
-            .phone
-            .toString());
+        final errorData =
+            UserModeError.fromJson(jsonDecode(response.toString()));
+
+        // Extract the error messages from the list of maps
+        List<String> errorMessages = [];
+        for (var errorItem in errorData.errors) {
+          for (var errorMessage in errorItem.values) {
+            errorMessages.add(errorMessage);
+          }
+        }
+
+        // Return the concatenated error messages
+        return Left(errorMessages.join('\n'));
       }
     } catch (e) {
       return Left(e.toString());

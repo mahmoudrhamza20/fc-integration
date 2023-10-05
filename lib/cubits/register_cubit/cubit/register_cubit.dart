@@ -7,9 +7,7 @@ import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/core/widgets/custom_snackbar.dart';
 import 'package:shared/screens/privacy_screen.dart';
-
 import '../../../repos/register_repo.dart';
-
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
@@ -54,6 +52,8 @@ class RegisterCubit extends Cubit<RegisterState> {
           emit(RegisterLoaded());
           AppStorage.cacheUserInfo(res);
           await AppStorage.cacheToken(res.data.token!);
+          // await CacheHelper.saveData(key: 'login', value: true);
+
           log('-----------------');
           log(AppStorage.getToken!);
           log('-----------------');

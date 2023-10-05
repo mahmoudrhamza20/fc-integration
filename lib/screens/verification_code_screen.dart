@@ -127,7 +127,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                           onTap: () {
                             if (cubit.checkOtpFormKey.currentState!
                                 .validate()) {
-                              cubit.checkOtp();
+                              cubit.checkOtp(phone: widget.phone);
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(

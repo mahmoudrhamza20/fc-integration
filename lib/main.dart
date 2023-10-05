@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
-import 'package:shared/cubits/register_cubit.dart/cubit/register_cubit.dart';
-
 import 'package:shared/firebase_options.dart';
 import 'package:shared/screens/splash_screen.dart';
 import 'package:shared/translations/codegen_loader.g.dart';
@@ -14,6 +12,7 @@ import 'core/utils/bloc_observer.dart';
 import 'core/utils/cache_helper.dart';
 import 'core/utils/magic_router.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'cubits/register_cubit/cubit/register_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,10 +27,14 @@ void main() async {
 
   runApp(EasyLocalization(
       // supportedLocales: const [Locale('ar'), Locale('en')],
-      supportedLocales: const [Locale('ar')],
+      supportedLocales: const [
+        Locale(
+          'ar',
+        )
+      ],
       assetLoader: const CodegenLoader(),
       path: 'assets/translations',
-      fallbackLocale: const Locale('ar'),
+      fallbackLocale: const Locale('en'),
       child: const MyApp()));
 }
 

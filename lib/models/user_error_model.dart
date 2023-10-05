@@ -12,7 +12,8 @@ String userModeErrorToJson(UserModeError data) => json.encode(data.toJson());
 class UserModeError {
   bool status;
   String message;
-  List<Error> errors;
+  // List<Error> errors;
+  List<Map<String, String>> errors;
 
   UserModeError({
     required this.status,
@@ -21,15 +22,18 @@ class UserModeError {
   });
 
   factory UserModeError.fromJson(Map<String, dynamic> json) => UserModeError(
-        status: json["status"],
-        message: json["message"],
-        errors: List<Error>.from(json["errors"].map((x) => Error.fromJson(x))),
+      status: json["status"],
+      message: json["message"],
+      errors: List<Map<String, String>>.from(
+          json['errors'].map((e) => Map<String, String>.from(e)))
+
+      // errors: List<Error>.from(json["errors"].map((x) => Error.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "errors": List<dynamic>.from(errors.map((x) => x.toJson())),
+        // "errors": List<dynamic>.from(errors.map((x) => x.toJson())),
       };
 }
 

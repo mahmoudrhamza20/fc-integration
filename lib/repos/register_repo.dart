@@ -53,15 +53,30 @@ class RegisterRepo {
         print(response.data);
         return Right(UserModel.fromJson(jsonDecode(response.toString())));
       } else {
-        final error = UserModeError.fromJson(jsonDecode(response.toString()));
-        final errorMessages =
-            error.errors.map((error) => error.toString()).toList();
+        final errorData =
+            UserModeError.fromJson(jsonDecode(response.toString()));
+
+        // Extract the error messages from the list of maps
+        List<String> errorMessages = [];
+        for (var errorItem in errorData.errors) {
+          for (var errorMessage in errorItem.values) {
+            errorMessages.add(errorMessage);
+          }
+        }
+
+        // Return the concatenated error messages
         return Left(errorMessages.join('\n'));
-        //   return Left(UserModeError.fromJson(jsonDecode(response.toString()))
-        //       .errors[0]
-        //       .phone
-        //       .toString());
       }
+      // else {
+      //   final error = UserModeError.fromJson(jsonDecode(response.toString()));
+      //   final errorMessages =
+      //       error.errors.map((error) => error.toString()).toList();
+      //   return Left(errorMessages.join('\n'));
+      //   //   return Left(UserModeError.fromJson(jsonDecode(response.toString()))
+      //   //       .errors[0]
+      //   //       .phone
+      //   //       .toString());
+      // }
     } catch (e) {
       return Left(e.toString());
     }

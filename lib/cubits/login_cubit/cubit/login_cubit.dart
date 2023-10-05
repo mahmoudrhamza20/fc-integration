@@ -8,7 +8,6 @@ import 'package:shared/models/user_model.dart';
 import 'package:shared/repos/check_phone_repo.dart';
 import 'package:shared/screens/complete_screen.dart';
 import 'package:shared/screens/login_screen.dart';
-
 import 'package:shared/screens/verification_code_screen.dart';
 import '../../../core/utils/magic_router.dart';
 import '../../../core/widgets/custom_snackbar.dart';
@@ -52,6 +51,7 @@ class LoginCubit extends Cubit<LoginState> {
           print(res.data.token);
           await AppStorage.cacheToken(res.data.token!);
           await AppStorage.cacheUserInfo(res);
+          //   CacheHelper.saveData(key: 'login', value: true);
           log('-----------------');
           print(userData!.id);
           log(AppStorage.getToken!);
@@ -86,23 +86,24 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future checkOtp() async {
+  Future checkOtp({required String phone}) async {
     if (checkOtpFormKey.currentState!.validate()) {
       checkOtpFormKey.currentState!.save();
       emit(CheckOtpLoading());
       final res = await checkPhoneRepo.checkOtp(
-        phone: checkPhoneController.text,
+        phone: phone,
         otp: checkOtpController.text,
       );
       res.fold(
         (err) {
           showSnackBar(err);
+          print(err);
           emit(CheckOtpError());
         },
         (res) async {
           showSnackBar(res.message);
-          MagicRouter.navigateAndPopAll(
-              CompleteProfileScreen(phone: checkPhoneController.text));
+          print(res.message);
+          MagicRouter.navigateAndPopAll(CompleteProfileScreen(phone: phone));
           checkOtpController.clear();
           emit(CheckOtpLoaded());
         },

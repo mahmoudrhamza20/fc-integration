@@ -6,7 +6,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:shared/core/utils/brand_colors.dart';
-import 'package:shared/cubits/register_cubit.dart/cubit/register_cubit.dart';
+import 'package:shared/cubits/register_cubit/cubit/register_cubit.dart';
 import 'package:shared/models/cities_model.dart';
 import 'package:shared/models/governorates_model.dart';
 import 'package:shared/widgets/custom_button.dart';
