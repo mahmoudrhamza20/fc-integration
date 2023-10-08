@@ -14,8 +14,10 @@ class VerificationCodeScreen extends StatefulWidget {
   const VerificationCodeScreen({
     super.key,
     required this.phone,
+    required this.countryCode,
   });
   final String phone;
+  final String countryCode;
   @override
   State<VerificationCodeScreen> createState() => _VerificationCodeScreenState();
 }
@@ -81,7 +83,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                     ),
                   ),
                   const Text(
-                    'Verification code',
+                    'رمز التحقق',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
@@ -122,12 +124,14 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                   state is CheckOtpLoading
                       ? const CircularProgressIndicator()
                       : customButton(
-                          text: 'Next',
+                          text: 'التالى',
                           context: context,
                           onTap: () {
                             if (cubit.checkOtpFormKey.currentState!
                                 .validate()) {
-                              cubit.checkOtp(phone: widget.phone);
+                              cubit.checkOtp(
+                                  phone: widget.phone,
+                                  countryCode: widget.countryCode);
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(

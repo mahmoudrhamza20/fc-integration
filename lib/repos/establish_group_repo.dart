@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/core/utils/dio_helper.dart';
@@ -14,10 +15,9 @@ class EstablishGroupRepo {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${AppStorage.getToken}'
     });
-
     try {
       if (response.statusCode == 200 && response.data['result'] == true) {
-        print("Success establishGroup");
+        log("Success establishGroup");
         return Right(
             EstablishGroupModel.fromJson(jsonDecode(response.toString())));
       } else {

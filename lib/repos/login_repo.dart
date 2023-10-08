@@ -15,11 +15,18 @@ import '../models/user_model.dart';
 class LoginRepo {
   Future<Either<String, UserModel>> login(
       {required String phone,
+      required String countryCode,
       required String password,
       required String token}) async {
-    final response = await DioHelper.post(EndPoints.login,
-        body: {'phone': phone, 'password': password, 'device_token': token},
-        headers: {'Accept-Language': 'ar', 'Accept': 'application/json'});
+    final response = await DioHelper.post(EndPoints.login, body: {
+      'phone': phone,
+      'country_code': countryCode,
+      'password': password,
+      'device_token': token
+    }, headers: {
+      'Accept-Language': 'ar',
+      'Accept': 'application/json'
+    });
 
     try {
       if (response.statusCode == 200 && response.data['result'] == true) {

@@ -96,19 +96,23 @@ class CheckOtbErrorModel {
 class Error {
   String? phone;
   String? otp;
+  String? countryCode;
 
   Error({
     this.phone,
     this.otp,
+    this.countryCode,
   });
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
         phone: json["phone"],
         otp: json["otp"],
+        countryCode: json["country_code"],
       );
 
   Map<String, dynamic> toJson() => {
         "phone": phone,
         "otp": otp,
+        "country_code": countryCode,
       };
 }

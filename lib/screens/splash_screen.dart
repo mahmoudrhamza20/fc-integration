@@ -1,24 +1,23 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-
 import 'package:shared/core/utils/brand_colors.dart';
-
 import 'package:shared/core/utils/hex_color.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
-
+import 'package:shared/screens/home_screen.dart';
 import 'package:shared/screens/login_screen.dart';
-
 import 'package:shared/widgets/custom_button.dart';
+import '../core/utils/app_storage.dart';
+import '../core/utils/validator.dart';
 
 class MyCustomSplashScreen extends StatefulWidget {
   const MyCustomSplashScreen({super.key});
@@ -66,11 +65,15 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
         _containerOpacity = 1;
       });
     });
+    String? token = AppStorage.getToken;
 
+    print(token.toString());
     Timer(const Duration(seconds: 4), () {
-      setState(() {
+      if (token == null) {
         Navigator.pushReplacement(context, PageTransition(const LoginScreen()));
-      });
+      } else {
+        Navigator.pushReplacement(context, PageTransition(const HomeScreen()));
+      }
     });
   }
 
@@ -163,10 +166,15 @@ class PageTransition extends PageRouteBuilder {
         );
 }
 
-class SecondPage extends StatelessWidget {
-  SecondPage({super.key});
+class SecondPage extends StatefulWidget {
+  const SecondPage({super.key});
 
-  final phoneController = TextEditingController();
+  @override
+  State<SecondPage> createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
+  String? countryCode;
 
   @override
   Widget build(BuildContext context) {
@@ -206,111 +214,114 @@ class SecondPage extends StatelessWidget {
                     key: cubit.checkPhoneFormKey,
                     child: Column(
                       children: <Widget>[
-                        Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: IntlPhoneField(
-                            textAlign: TextAlign.end,
-                            controller: cubit.checkPhoneController,
-                            keyboardType: TextInputType.phone,
-                            pickerDialogStyle: PickerDialogStyle(
-                                searchFieldInputDecoration:
-                                    const InputDecoration(
-                                        hintText: 'أبحث عن البلد')),
-                            languageCode: "ar",
-                            countries: const [
-                              Country(
-                                  flag: '🇪🇬',
-                                  name: 'مصر',
-                                  code: 'EG',
-                                  dialCode: '20',
-                                  nameTranslations: {},
-                                  minLength: 10,
-                                  maxLength: 10),
-                              Country(
-                                  flag: '🇧🇭',
-                                  name: 'البحرين',
-                                  code: 'BH',
-                                  dialCode: '973',
-                                  nameTranslations: {},
-                                  minLength: 8,
-                                  maxLength: 8),
-                              Country(
-                                  flag: '🇯🇴',
-                                  name: 'الاردن',
-                                  code: 'JO',
-                                  dialCode: '962',
-                                  nameTranslations: {},
-                                  minLength: 9,
-                                  maxLength: 9),
-                              Country(
-                                  flag: '🇰🇼',
-                                  name: 'الكويت',
-                                  code: 'KW',
-                                  dialCode: '965',
-                                  nameTranslations: {},
-                                  minLength: 8,
-                                  maxLength: 8),
-                              Country(
-                                  flag: '🇶🇦',
-                                  name: 'قطر',
-                                  code: 'QA',
-                                  dialCode: '974',
-                                  nameTranslations: {},
-                                  minLength: 8,
-                                  maxLength: 8),
-                              Country(
-                                  flag: '🇸🇦',
-                                  name: 'المملكة العربية السعودية',
-                                  code: 'SA',
-                                  dialCode: '966',
-                                  nameTranslations: {},
-                                  minLength: 9,
-                                  maxLength: 9),
-                              Country(
-                                  flag: '🇦🇪',
-                                  name: 'الإمارات العربية المتحدة',
-                                  code: 'AE',
-                                  dialCode: '971',
-                                  nameTranslations: {},
-                                  minLength: 9,
-                                  maxLength: 9),
-                            ],
-                            decoration: InputDecoration(
-                              // fillColor: HexColor('#F7F8F8'),
-                              // labelText: 'رقم الهاتف',
-                              // border: const OutlineInputBorder(
-                              //   borderRadius: BorderRadius.all(Radius.circular(15)),
-                              //   borderSide: BorderSide(),
-                              // ),
-                              errorStyle:
-                                  const TextStyle(color: BrandColors.primary),
-                              contentPadding: EdgeInsets.all(16.w),
-                              isDense: true,
-                              filled: true,
-                              fillColor: HexColor('#F7F8F8'),
-                              border: OutlineInputBorder(
+                        IntlPhoneField(
+                          validator: (value) =>
+                              Validator.phoneNumber(value!.toString()),
+                          textAlign: TextAlign.start,
+                          controller: cubit.checkPhoneController,
+                          keyboardType: TextInputType.phone,
+                          pickerDialogStyle: PickerDialogStyle(
+                              searchFieldInputDecoration: const InputDecoration(
+                                  hintText: 'أبحث عن البلد')),
+                          languageCode: "ar",
+                          countries: const [
+                            Country(
+                                flag: '🇪🇬',
+                                name: 'مصر',
+                                code: 'EG',
+                                dialCode: '20',
+                                nameTranslations: {},
+                                minLength: 10,
+                                maxLength: 10),
+                            Country(
+                                flag: '🇧🇭',
+                                name: 'البحرين',
+                                code: 'BH',
+                                dialCode: '973',
+                                nameTranslations: {},
+                                minLength: 8,
+                                maxLength: 8),
+                            Country(
+                                flag: '🇯🇴',
+                                name: 'الاردن',
+                                code: 'JO',
+                                dialCode: '962',
+                                nameTranslations: {},
+                                minLength: 9,
+                                maxLength: 9),
+                            Country(
+                                flag: '🇰🇼',
+                                name: 'الكويت',
+                                code: 'KW',
+                                dialCode: '965',
+                                nameTranslations: {},
+                                minLength: 8,
+                                maxLength: 8),
+                            Country(
+                                flag: '🇶🇦',
+                                name: 'قطر',
+                                code: 'QA',
+                                dialCode: '974',
+                                nameTranslations: {},
+                                minLength: 8,
+                                maxLength: 8),
+                            Country(
+                                flag: '🇸🇦',
+                                name: 'المملكة العربية السعودية',
+                                code: 'SA',
+                                dialCode: '966',
+                                nameTranslations: {},
+                                minLength: 9,
+                                maxLength: 9),
+                            Country(
+                                flag: '🇦🇪',
+                                name: 'الإمارات العربية المتحدة',
+                                code: 'AE',
+                                dialCode: '971',
+                                nameTranslations: {},
+                                minLength: 9,
+                                maxLength: 9),
+                          ],
+                          decoration: InputDecoration(
+                            // fillColor: HexColor('#F7F8F8'),
+                            // labelText: 'رقم الهاتف',
+                            // border: const OutlineInputBorder(
+                            //   borderRadius: BorderRadius.all(Radius.circular(15)),
+                            //   borderSide: BorderSide(),
+                            // ),
+                            errorStyle:
+                                const TextStyle(color: BrandColors.primary),
+                            contentPadding: EdgeInsets.all(16.w),
+                            isDense: true,
+                            filled: true,
+                            fillColor: HexColor('#F7F8F8'),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14.r),
+                              borderSide: const BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(14.r),
                                 borderSide: const BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(14.r),
-                                  borderSide: const BorderSide(
-                                      width: 1, color: BrandColors.primary)),
-                              hintMaxLines: 1,
-                              hintText: 'رقم الهاتف',
-                              hintStyle: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: 'Poppins',
-                                  color: HexColor('#B5B5B5')),
-                            ),
-                            initialCountryCode: 'EG',
-                            onChanged: (phone) {
-                              // print(phone.completeNumber);
-                            },
+                                    width: 1, color: BrandColors.primary)),
+                            hintMaxLines: 1,
+                            hintText: 'رقم الهاتف',
+                            hintStyle: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: 'Poppins',
+                                color: HexColor('#B5B5B5')),
                           ),
+                          initialCountryCode: 'EG',
+                          onChanged: (phone) {
+                            //  print(phone.countryCode);
+                            setState(() {
+                              countryCode = phone.countryCode;
+                            });
+                            log(countryCode.toString());
+                            // print(phone.completeNumber);
+                          },
                         ),
                         SizedBox(height: 20.h),
                         Center(
@@ -319,10 +330,8 @@ class SecondPage extends StatelessWidget {
                               : customButton(
                                   text: 'تسجيل',
                                   onTap: () {
-                                    cubit.checkPhone();
-                                    print(
-                                      cubit.checkPhoneController.text,
-                                    );
+                                    cubit.checkPhone(countryCode: countryCode!);
+                                    // print(countryCode);
                                   },
                                   context: context),
                         ),

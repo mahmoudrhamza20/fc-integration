@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +15,10 @@ import 'package:shared/widgets/custom_text_field.dart';
 import '../core/utils/validator.dart';
 
 class CompleteProfileScreen extends StatelessWidget {
-  const CompleteProfileScreen({super.key, required this.phone});
+  const CompleteProfileScreen(
+      {super.key, required this.phone, required this.countryCode});
   final String phone;
+  final String countryCode;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +26,7 @@ class CompleteProfileScreen extends StatelessWidget {
         create: (context) => RegisterCubit(),
         child: CompleteProfileScreenBody(
           phone: phone,
+          countryCode: countryCode,
         ),
       ),
     );
@@ -30,8 +34,10 @@ class CompleteProfileScreen extends StatelessWidget {
 }
 
 class CompleteProfileScreenBody extends StatefulWidget {
-  const CompleteProfileScreenBody({super.key, required this.phone});
+  const CompleteProfileScreenBody(
+      {super.key, required this.phone, required this.countryCode});
   final String phone;
+  final String countryCode;
   @override
   State<CompleteProfileScreenBody> createState() =>
       _CompleteProfileScreenBodyState();
@@ -98,7 +104,7 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.phone);
+    log(widget.phone);
     return SafeArea(
       child: BlocBuilder<RegisterCubit, RegisterState>(
         builder: (context, state) {
@@ -384,7 +390,9 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                                 child: customButton(
                                     text: 'التالي',
                                     onTap: () async {
-                                      cubit.register(phone: widget.phone);
+                                      cubit.register(
+                                          phone: widget.phone,
+                                          countryCode: widget.countryCode);
                                     },
                                     context: context),
                               ),

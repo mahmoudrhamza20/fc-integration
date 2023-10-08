@@ -10,6 +10,7 @@ class RegisterRepo {
   Future<Either<dynamic, UserModel>> register({
     required String name,
     required String phone,
+    required String countryCode,
     required String gender,
     required String passwordConfermation,
     required String password,
@@ -22,6 +23,7 @@ class RegisterRepo {
     final response = await DioHelper.post(EndPoints.register, body: {
       'name': name,
       'phone': phone,
+      'country_code': countryCode,
       'password': password,
       'gender': gender,
       'confirm_password': passwordConfermation,

@@ -25,11 +25,12 @@ class RegisterCubit extends Cubit<RegisterState> {
   final villageController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
 
-  Future register({required String phone}) async {
+  Future register({required String phone, required String countryCode}) async {
     if (formKey.currentState!.validate()) {
       emit(RegisterLoading());
       final res = await registerRepo.register(
         phone: phone,
+        countryCode: countryCode,
         cityController: cityController.text,
         dateOfBirth: dateController.text,
         gender: genderController.text,
@@ -40,11 +41,9 @@ class RegisterCubit extends Cubit<RegisterState> {
         password: passwordController.text,
         token: await AppFunc.getTokenDevice(),
       );
-
       res.fold(
         (err) {
           showSnackBar(err);
-          print(err);
           emit(RegisterError());
         },
         (res) async {
@@ -53,7 +52,6 @@ class RegisterCubit extends Cubit<RegisterState> {
           AppStorage.cacheUserInfo(res);
           await AppStorage.cacheToken(res.data.token!);
           // await CacheHelper.saveData(key: 'login', value: true);
-
           log('-----------------');
           log(AppStorage.getToken!);
           log('-----------------');

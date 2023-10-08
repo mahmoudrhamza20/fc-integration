@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -85,7 +87,7 @@ class FirstStageScreen extends StatelessWidget {
                             onTap: () {
                               cubit.searchInStage(
                                   groupNumber: codeController.text);
-                              print(codeController.text);
+                              log(codeController.text);
                             },
                             context: context),
                     const SizedBox(

@@ -79,10 +79,6 @@ class StagesCubit extends Cubit<StagesState> {
         showSnackBar(res.message);
         searchGroup = res.data.groups;
         searchData = res.data;
-        print('///////////////////////');
-        // print(searchGroup2!.id);
-        // print(searchGroup2!.user.id);
-        print('///////////////////////');
         emit(SearchInStageLoaded());
       },
     );

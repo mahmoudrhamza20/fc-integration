@@ -2,10 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared/core/widgets/custom_snackbar.dart';
 import 'package:shared/models/group_by_id_model.dart';
-
 import '../../../models/get_groubs_model.dart';
 import '../../../repos/get_groups_repo.dart';
-
 part 'get_groups_state.dart';
 
 class GetGroupsCubit extends Cubit<GetGroupsState> {
@@ -63,7 +61,6 @@ class GetGroupsCubit extends Cubit<GetGroupsState> {
       (res) async {
         showSnackBar(res.message);
         searchKeywordsData2 = res.data.groups[0];
-        print(searchKeywordsData2);
         emit(SearchKeywordsLoaded());
       },
     );

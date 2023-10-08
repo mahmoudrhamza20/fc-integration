@@ -11,9 +11,11 @@ import 'package:shared/models/check_phone_model.dart';
 class CheckPhoneRepo {
   Future<Either<String, CheckPhoneModel>> checkPhone({
     required String phone,
+    required String countryCode,
   }) async {
     final response = await DioHelper.post(EndPoints.checkPhone, body: {
       'phone': phone,
+      'country_code': countryCode,
     }, headers: {
       'Accept-Language': 'ar',
       'Accept': 'application/json'
@@ -30,11 +32,19 @@ class CheckPhoneRepo {
             .message
             .toString());
       } else {
-        return Left(
-            CheckPhoneErrorModel.fromJson(jsonDecode(response.toString()))
-                .errors[0]
-                .phone
-                .toString());
+        final errorData =
+            CheckPhoneErrorModel.fromJson(jsonDecode(response.toString()));
+
+        // Extract the error messages from the list of maps
+        List<String> errorMessages = [];
+        for (var errorItem in errorData.errors) {
+          for (var errorMessage in errorItem.values) {
+            errorMessages.add(errorMessage);
+          }
+        }
+
+        // Return the concatenated error messages
+        return Left(errorMessages.join('\n'));
       }
     } catch (e) {
       return Left(e.toString());
@@ -42,10 +52,13 @@ class CheckPhoneRepo {
   }
 
   Future<Either<String, CheckOtbModel>> checkOtp(
-      {required String phone, required String otp}) async {
+      {required String phone,
+      required String otp,
+      required String countryCode}) async {
     final response = await DioHelper.post(EndPoints.checkOtp, body: {
       'phone': phone,
       'otp': otp,
+      'country_code': countryCode,
     }, headers: {
       'Accept-Language': 'ar',
       'Accept': 'application/json',

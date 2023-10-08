@@ -47,6 +47,7 @@ class Error {
   String? country;
   String? address;
   String? deviceToken;
+  String? countryCode;
 
   Error({
     this.name,
@@ -58,6 +59,7 @@ class Error {
     this.country,
     this.address,
     this.deviceToken,
+    this.countryCode,
   });
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
@@ -70,6 +72,7 @@ class Error {
         country: json["country"],
         address: json["address"],
         deviceToken: json["device_token"],
+        countryCode: json["country_code"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,5 +85,6 @@ class Error {
         "country": country,
         "address": address,
         "device_token": deviceToken,
+        "country_code": countryCode,
       };
 }

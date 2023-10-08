@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -24,6 +26,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool showPassword = true;
+  String? countryCode;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(height: 5.w),
                             IntlPhoneField(
+                              textAlign: TextAlign.start,
                               controller: cubit.phoneController,
                               keyboardType: TextInputType.phone,
                               pickerDialogStyle: PickerDialogStyle(
@@ -174,7 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               initialCountryCode: 'EG',
                               onChanged: (phone) {
-                                // print(phone.completeNumber);
+                                setState(() {
+                                  countryCode = phone.countryCode;
+                                });
+                                log(countryCode.toString());
                               },
                             ),
                             // customTextField(
@@ -229,7 +236,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: customButton(
                                         text: 'تسجيل الدخول',
                                         onTap: () {
-                                          cubit.login();
+                                          cubit.login(
+                                              countryCode: countryCode!);
                                           // if (_formKey.currentState!.validate()) {
                                           //   _formKey.currentState!.save();
                                           // MagicRouter.navigateTo(
@@ -252,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    MagicRouter.navigateTo(SecondPage());
+                                    MagicRouter.navigateTo(const SecondPage());
                                   },
                                   child: Text(
                                     'تسجيل حساب',

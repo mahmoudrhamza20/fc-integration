@@ -13,7 +13,8 @@ String checkPhoneErrorModelToJson(CheckPhoneErrorModel data) =>
 class CheckPhoneErrorModel {
   bool status;
   String message;
-  List<Error> errors;
+  // List<Error> errors;
+  List<Map<String, String>> errors;
 
   CheckPhoneErrorModel({
     required this.status,
@@ -23,30 +24,36 @@ class CheckPhoneErrorModel {
 
   factory CheckPhoneErrorModel.fromJson(Map<String, dynamic> json) =>
       CheckPhoneErrorModel(
-        status: json["status"],
-        message: json["message"],
-        errors: List<Error>.from(json["errors"].map((x) => Error.fromJson(x))),
-      );
+          status: json["status"],
+          message: json["message"],
+          errors: List<Map<String, String>>.from(
+              json['errors'].map((e) => Map<String, String>.from(e)))
+          // errors: List<Error>.from(json["errors"].map((x) => Error.fromJson(x))),
+          );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "errors": List<dynamic>.from(errors.map((x) => x.toJson())),
+        // "errors": List<dynamic>.from(errors.map((x) => x.toJson())),
       };
 }
 
 class Error {
   String phone;
+  String countryCode;
 
   Error({
     required this.phone,
+    required this.countryCode,
   });
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
         phone: json["phone"],
+        countryCode: json["country_code"],
       );
 
   Map<String, dynamic> toJson() => {
         "phone": phone,
+        "country_code": countryCode,
       };
 }

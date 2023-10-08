@@ -31,7 +31,7 @@ class LoginCubit extends Cubit<LoginState> {
   final checkOtpController = TextEditingController();
   final passwordController = TextEditingController();
 
-  Future login() async {
+  Future login({required String countryCode}) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       emit(LoginLoading());
@@ -39,6 +39,7 @@ class LoginCubit extends Cubit<LoginState> {
         password: passwordController.text,
         phone: phoneController.text,
         token: await AppFunc.getTokenDevice(),
+        countryCode: countryCode,
       );
       res.fold(
         (err) {
@@ -48,14 +49,12 @@ class LoginCubit extends Cubit<LoginState> {
         (res) async {
           showSnackBar(res.message);
           userData = res.data.user;
-          print(res.data.token);
           await AppStorage.cacheToken(res.data.token!);
           await AppStorage.cacheUserInfo(res);
           //   CacheHelper.saveData(key: 'login', value: true);
-          log('-----------------');
-          print(userData!.id);
-          log(AppStorage.getToken!);
-          log('-----------------');
+          log(userData!.id.toString());
+          print("token is: ${AppStorage.getToken!}");
+
           MagicRouter.navigateAndPopAll(const HomeScreen());
           emit(LoginLoaded());
         },
@@ -63,12 +62,13 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future checkPhone() async {
+  Future checkPhone({required String countryCode}) async {
     if (checkPhoneFormKey.currentState!.validate()) {
       checkPhoneFormKey.currentState!.save();
       emit(CheckPhoneLoading());
       final res = await checkPhoneRepo.checkPhone(
         phone: checkPhoneController.text,
+        countryCode: countryCode,
       );
       res.fold(
         (err) {
@@ -77,8 +77,10 @@ class LoginCubit extends Cubit<LoginState> {
         },
         (res) async {
           showSnackBar(res.message);
-          MagicRouter.navigateTo(
-              VerificationCodeScreen(phone: checkPhoneController.text));
+          MagicRouter.navigateTo(VerificationCodeScreen(
+            phone: checkPhoneController.text,
+            countryCode: countryCode,
+          ));
           checkPhoneController.clear();
           emit(CheckPhoneLoaded());
         },
@@ -86,24 +88,26 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future checkOtp({required String phone}) async {
+  Future checkOtp({required String phone, required String countryCode}) async {
     if (checkOtpFormKey.currentState!.validate()) {
       checkOtpFormKey.currentState!.save();
       emit(CheckOtpLoading());
       final res = await checkPhoneRepo.checkOtp(
         phone: phone,
         otp: checkOtpController.text,
+        countryCode: countryCode,
       );
       res.fold(
         (err) {
           showSnackBar(err);
-          print(err);
           emit(CheckOtpError());
         },
         (res) async {
           showSnackBar(res.message);
-          print(res.message);
-          MagicRouter.navigateAndPopAll(CompleteProfileScreen(phone: phone));
+          MagicRouter.navigateAndPopAll(CompleteProfileScreen(
+            phone: phone,
+            countryCode: countryCode,
+          ));
           checkOtpController.clear();
           emit(CheckOtpLoaded());
         },
