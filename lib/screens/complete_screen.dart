@@ -258,6 +258,71 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                         ),
                         SizedBox(height: 5.w),
                         customTextField(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  actionsAlignment: MainAxisAlignment.center,
+                                  title: const Center(
+                                      child: Text('برجاء اختيار النوع')),
+                                  actions: [
+                                    SizedBox(
+                                      height: 80.h,
+                                      width: 70.w,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: items.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return ListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            title: Text(items[index]),
+                                            onTap: () {
+                                              setState(() {
+                                                dropdownvalue = items[index];
+                                                cubit.genderController.text =
+                                                    items[index];
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+
+                            // showModalBottomSheet(
+                            //   context: context,
+                            //   builder: (BuildContext context) {
+                            //     return SizedBox(
+                            //       height: 150,
+                            //       child: ListView.builder(
+                            //         itemCount: items.length,
+                            //         itemBuilder:
+                            //             (BuildContext context, int index) {
+                            //           return ListTile(
+                            //             title: Text(items[index]),
+                            //             onTap: () {
+                            //               setState(() {
+                            //                 dropdownvalue = items[index];
+                            //                 cubit.genderController.text =
+                            //                     items[index];
+                            //               });
+                            //               Navigator.pop(context);
+                            //             },
+                            //           );
+                            //         },
+                            //       ),
+                            //     );
+                            //   },
+                            // );
+                          },
                           startIcon: const Icon(Icons.male),
                           hintText: 'برجاء اختيار النوع',
                           readOnly: true,
@@ -408,6 +473,30 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
           );
         },
       ),
+    );
+  }
+
+  void _showDropdown(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(items[index]),
+                onTap: () {
+                  setState(() {
+                    dropdownvalue = items[index];
+                  });
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
