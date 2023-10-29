@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shared/core/utils/brand_colors.dart';
@@ -224,64 +223,66 @@ class _SecondPageState extends State<SecondPage> {
                               searchFieldInputDecoration: const InputDecoration(
                                   hintText: 'أبحث عن البلد')),
                           languageCode: "ar",
-                          countries: const [
-                            Country(
-                                flag: '🇪🇬',
-                                name: 'مصر',
-                                code: 'EG',
-                                dialCode: '20',
-                                nameTranslations: {},
-                                minLength: 10,
-                                maxLength: 10),
-                            Country(
-                                flag: '🇧🇭',
-                                name: 'البحرين',
-                                code: 'BH',
-                                dialCode: '973',
-                                nameTranslations: {},
-                                minLength: 8,
-                                maxLength: 8),
-                            Country(
-                                flag: '🇯🇴',
-                                name: 'الاردن',
-                                code: 'JO',
-                                dialCode: '962',
-                                nameTranslations: {},
-                                minLength: 9,
-                                maxLength: 9),
-                            Country(
-                                flag: '🇰🇼',
-                                name: 'الكويت',
-                                code: 'KW',
-                                dialCode: '965',
-                                nameTranslations: {},
-                                minLength: 8,
-                                maxLength: 8),
-                            Country(
-                                flag: '🇶🇦',
-                                name: 'قطر',
-                                code: 'QA',
-                                dialCode: '974',
-                                nameTranslations: {},
-                                minLength: 8,
-                                maxLength: 8),
-                            Country(
-                                flag: '🇸🇦',
-                                name: 'المملكة العربية السعودية',
-                                code: 'SA',
-                                dialCode: '966',
-                                nameTranslations: {},
-                                minLength: 9,
-                                maxLength: 9),
-                            Country(
-                                flag: '🇦🇪',
-                                name: 'الإمارات العربية المتحدة',
-                                code: 'AE',
-                                dialCode: '971',
-                                nameTranslations: {},
-                                minLength: 9,
-                                maxLength: 9),
-                          ],
+
+                          // countries: const [
+                          //   Country(
+                          //       flag: '🇪🇬',
+                          //       name: 'مصر',
+                          //       code: 'EG',
+                          //       dialCode: '20',
+                          //       nameTranslations: {},
+                          //       minLength: 10,
+                          //       maxLength: 10),
+                          //   Country(
+                          //       flag: '🇧🇭',
+                          //       name: 'البحرين',
+                          //       code: 'BH',
+                          //       dialCode: '973',
+                          //       nameTranslations: {},
+                          //       minLength: 8,
+                          //       maxLength: 8),
+                          //   Country(
+                          //       flag: '🇯🇴',
+                          //       name: 'الاردن',
+                          //       code: 'JO',
+                          //       dialCode: '962',
+                          //       nameTranslations: {},
+                          //       minLength: 9,
+                          //       maxLength: 9),
+                          //   Country(
+                          //       flag: '🇰🇼',
+                          //       name: 'الكويت',
+                          //       code: 'KW',
+                          //       dialCode: '965',
+                          //       nameTranslations: {},
+                          //       minLength: 8,
+                          //       maxLength: 8),
+                          //   Country(
+                          //       flag: '🇶🇦',
+                          //       name: 'قطر',
+                          //       code: 'QA',
+                          //       dialCode: '974',
+                          //       nameTranslations: {},
+                          //       minLength: 8,
+                          //       maxLength: 8),
+                          //   Country(
+                          //       flag: '🇸🇦',
+                          //       name: 'المملكة العربية السعودية',
+                          //       code: 'SA',
+                          //       dialCode: '966',
+                          //       nameTranslations: {},
+                          //       minLength: 9,
+                          //       maxLength: 9),
+                          //   Country(
+                          //       flag: '🇦🇪',
+                          //       name: 'الإمارات العربية المتحدة',
+                          //       code: 'AE',
+                          //       dialCode: '971',
+                          //       nameTranslations: {},
+                          //       minLength: 9,
+                          //       maxLength: 9),
+                          // ],
+
                           decoration: InputDecoration(
                             // fillColor: HexColor('#F7F8F8'),
                             // labelText: 'رقم الهاتف',

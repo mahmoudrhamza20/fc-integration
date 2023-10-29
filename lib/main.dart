@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/app_storage.dart';
+import 'package:shared/cubits/get_governments_countries_cubit/cubit/getgovernmentsandcountries_cubit.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
 import 'package:shared/firebase_options.dart';
 import 'package:shared/screens/splash_screen.dart';
@@ -56,6 +57,12 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => RegisterCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GetGovernmentsAndCountriesCubit()
+            ..getCountries()
+            ..getGovernments(
+                countryId: (CacheHelper.getData(key: 'countryId'))),
         ),
       ],
       child: ScreenUtilInit(

@@ -55,6 +55,7 @@ class StagesCubit extends Cubit<StagesState> {
     res.fold(
       (err) {
         showSnackBar(err);
+        print(err);
         emit(StagesByIdError());
       },
       (res) async {

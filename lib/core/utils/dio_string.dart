@@ -11,6 +11,8 @@ class EndPoints {
   static const String terms = 'terms';
   static const String groups = 'groups';
   static const String stages = 'stages';
+  // static const String governments = 'governorates/1';
+  static const String countries = 'countries';
   static const String search = 'search';
   static const String joinGroup = 'joinGroup';
   static const String establishGroup = 'establishGroup';
@@ -18,6 +20,10 @@ class EndPoints {
 
   static String groupById({required int id}) {
     return 'groups/$id';
+  }
+
+  static String governments({required int countryId}) {
+    return 'governorates/$countryId';
   }
 
   static String stageById({required int id}) {

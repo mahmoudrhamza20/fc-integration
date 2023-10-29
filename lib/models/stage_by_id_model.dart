@@ -185,7 +185,7 @@ class GetStagesByIdData {
 class StageId {
   int id;
   String name;
-  int value;
+  dynamic value;
   String currency;
   bool isCurrent;
   bool isDone;
@@ -223,7 +223,7 @@ class SuggestedGroup {
   String groupNumber;
   String name;
   String stage;
-  int value;
+  dynamic value;
   String currency;
   Founder founder;
 

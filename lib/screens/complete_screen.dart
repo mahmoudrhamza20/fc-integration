@@ -7,12 +7,16 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:shared/core/utils/brand_colors.dart';
+import 'package:shared/core/utils/cache_helper.dart';
+import 'package:shared/cubits/get_governments_countries_cubit/cubit/getgovernmentsandcountries_cubit.dart';
 import 'package:shared/cubits/register_cubit/cubit/register_cubit.dart';
 import 'package:shared/models/cities_model.dart';
 import 'package:shared/models/governorates_model.dart';
 import 'package:shared/widgets/custom_button.dart';
 import 'package:shared/widgets/custom_text_field.dart';
 import '../core/utils/validator.dart';
+import '../models/get_countries_model.dart';
+import '../models/get_government_model.dart';
 
 class CompleteProfileScreen extends StatelessWidget {
   const CompleteProfileScreen(
@@ -109,367 +113,401 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
       child: BlocBuilder<RegisterCubit, RegisterState>(
         builder: (context, state) {
           final cubit = RegisterCubit.of(context);
-          return SingleChildScrollView(
-            child: Form(
-              key: cubit.formKey,
-              child: Column(
-                children: [
-                  ClipPath(
-                    clipper: WaveClipperTwo(),
-                    child: Container(
-                      height: 200,
-                      color: BrandColors.primary,
-                      child: Center(
-                          child: Padding(
-                        padding: EdgeInsets.only(top: 50.h),
-                        child: const Column(
+          return BlocBuilder<GetGovernmentsAndCountriesCubit,
+              GetGovernmentsAndCountriesState>(
+            builder: (context, countriesState) {
+              final cubitCountries =
+                  GetGovernmentsAndCountriesCubit.of(context);
+              return SingleChildScrollView(
+                child: Form(
+                  key: cubit.formKey,
+                  child: Column(
+                    children: [
+                      ClipPath(
+                        clipper: WaveClipperTwo(),
+                        child: Container(
+                          height: 200,
+                          color: BrandColors.primary,
+                          child: Center(
+                              child: Padding(
+                            padding: EdgeInsets.only(top: 50.h),
+                            child: const Column(
+                              children: [
+                                Text(
+                                  "مرحبا بك",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  "برجاء استكمال البيانات",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            ),
+                          )),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "مرحبا بك",
-                              style: TextStyle(fontSize: 16),
+                              "الاسم",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.w,
+                                  color: BrandColors.primary),
+                            ),
+                            SizedBox(height: 5.w),
+                            customTextField(
+                              startIcon: const Icon(Icons.person),
+                              isPassword: false,
+                              type: TextInputType.emailAddress,
+                              controller: cubit.nameController,
+                              hintText: ' برجاء إدخال الإسم (لا يقل عن ٤ حروف)',
+                              endIcon: null,
+                              validator: (value) => Validator.name(value),
+                            ),
+                            SizedBox(
+                              height: 10.h,
                             ),
                             Text(
-                              "برجاء استكمال البيانات",
-                              style: TextStyle(fontSize: 18),
+                              "كلمة المرور",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.w,
+                                  color: BrandColors.primary),
+                            ),
+                            SizedBox(height: 5.w),
+                            customTextField(
+                                startIcon: const Icon(Icons.lock),
+                                isPassword:
+                                    showPassword == false ? false : true,
+                                type: TextInputType.visiblePassword,
+                                onPressed: () {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                },
+                                validator: (value) => Validator.password(value),
+                                endIcon: showPassword == true
+                                    ? const Icon(Icons.visibility_off)
+                                    : const Icon(Icons.visibility),
+                                controller: cubit.passwordController,
+                                hintText: 'برجاء ادخال كلمة المرور'),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              "تأكيد كلمة المرور",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.w,
+                                  color: BrandColors.primary),
+                            ),
+                            SizedBox(height: 5.w),
+                            customTextField(
+                                startIcon: const Icon(Icons.lock),
+                                isPassword:
+                                    showCoPassword == false ? false : true,
+                                type: TextInputType.visiblePassword,
+                                validator: (value) => Validator.confirmPassword(
+                                    value, cubit.passwordController.text),
+                                onPressed: () {
+                                  setState(() {
+                                    showCoPassword = !showCoPassword;
+                                  });
+                                },
+                                endIcon: showCoPassword == true
+                                    ? const Icon(Icons.visibility_off)
+                                    : const Icon(Icons.visibility),
+                                controller: cubit.coPasswordController,
+                                hintText: 'برجاء ادخال تأكيد كلمة المرور'),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              "تاريخ الميلاد",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.w,
+                                  color: BrandColors.primary),
+                            ),
+                            SizedBox(height: 5.w),
+                            customTextField(
+                                startIcon: const Icon(Icons.date_range),
+                                isPassword: false,
+                                readOnly: true,
+                                type: TextInputType.emailAddress,
+                                validator: (value) =>
+                                    Validator.generalField(value),
+                                controller: cubit.dateController,
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1950),
+                                      lastDate: DateTime.now());
+                                  if (pickedDate != null) {
+                                    String formattedDate =
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(pickedDate);
+                                    setState(() {
+                                      cubit.dateController.text = formattedDate;
+                                    });
+                                  } else {}
+                                },
+                                hintText:
+                                    ' برجاء إختيار تاريخ الميلاد (لا يقل عن ١٥ سنه )',
+                                endIcon: null),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              "النوع",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.w,
+                                  color: BrandColors.primary),
+                            ),
+                            SizedBox(height: 5.w),
+                            customTextField(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      actionsAlignment:
+                                          MainAxisAlignment.center,
+                                      title: const Center(
+                                          child: Text('برجاء اختيار النوع')),
+                                      actions: [
+                                        SizedBox(
+                                          height: 80.h,
+                                          width: 70.w,
+                                          child: ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: items.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return ListTile(
+                                                contentPadding: EdgeInsets.zero,
+                                                title: Text(items[index]),
+                                                onTap: () {
+                                                  setState(() {
+                                                    dropdownvalue =
+                                                        items[index];
+                                                    cubit.genderController
+                                                        .text = items[index];
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+
+                                // showModalBottomSheet(
+                                //   context: context,
+                                //   builder: (BuildContext context) {
+                                //     return SizedBox(
+                                //       height: 150,
+                                //       child: ListView.builder(
+                                //         itemCount: items.length,
+                                //         itemBuilder:
+                                //             (BuildContext context, int index) {
+                                //           return ListTile(
+                                //             title: Text(items[index]),
+                                //             onTap: () {
+                                //               setState(() {
+                                //                 dropdownvalue = items[index];
+                                //                 cubit.genderController.text =
+                                //                     items[index];
+                                //               });
+                                //               Navigator.pop(context);
+                                //             },
+                                //           );
+                                //         },
+                                //       ),
+                                //     );
+                                //   },
+                                // );
+                              },
+                              startIcon: const Icon(Icons.male),
+                              hintText: 'برجاء اختيار النوع',
+                              readOnly: true,
+                              validator: (value) =>
+                                  Validator.generalField(value),
+                              isPassword: false,
+                              type: TextInputType.text,
+                              controller: cubit.genderController,
+                              endIcon: PopupMenuButton<String>(
+                                onSelected: (String newValue) {
+                                  setState(() {
+                                    dropdownvalue = newValue;
+                                    cubit.genderController.text = newValue;
+                                  });
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return items
+                                      .map(
+                                        (String value) => PopupMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        ),
+                                      )
+                                      .toList();
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              "المحافظة",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.w,
+                                  color: BrandColors.primary),
+                            ),
+                            SizedBox(height: 5.w),
+                            customTextField(
+                              startIcon: const Icon(Icons.location_city),
+                              hintText: 'برجاء اختيار المحافظة',
+                              validator: (value) =>
+                                  Validator.generalField(value),
+                              readOnly: true,
+                              isPassword: false,
+                              type: TextInputType.text,
+                              controller: cubit.governorateController,
+                              endIcon: PopupMenuButton<String>(
+                                onSelected: (String newValue) {
+                                  setState(() {
+                                    dropdownvalue2 = newValue;
+                                    cubit.governorateController.text =
+                                        dropdownvalue2;
+                                  });
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return cubitCountries.countriesData
+                                      .map(
+                                        (Country value) =>
+                                            PopupMenuItem<String>(
+                                          value: value.name,
+                                          child: Text(value.name),
+                                          onTap: () {
+                                            cubitCountries.getGovernments(
+                                                countryId: value.id);
+                                            CacheHelper.saveData(
+                                                key: 'countryId',
+                                                value: value.id);
+                                            print(CacheHelper.getData(
+                                                key: 'countryId'));
+                                            // _getCities(id: value.id.toString());
+                                          },
+                                        ),
+                                      )
+                                      .toList();
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              "المدينة",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.w,
+                                  color: BrandColors.primary),
+                            ),
+                            SizedBox(height: 5.w),
+                            customTextField(
+                              startIcon: const Icon(Icons.location_city),
+                              hintText: 'برجاء اختيار المدينة',
+                              validator: (value) =>
+                                  Validator.generalField(value),
+                              readOnly: true,
+                              isPassword: false,
+                              type: TextInputType.text,
+                              controller: cubit.cityController,
+                              endIcon: PopupMenuButton<String>(
+                                onSelected: (String newValue) {
+                                  setState(() {
+                                    dropdownvalue3 = newValue;
+                                    cubit.cityController.text = dropdownvalue3;
+                                  });
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return cubitCountries.governmentData.isEmpty
+                                      ? <PopupMenuEntry<String>>[
+                                          const PopupMenuItem<String>(
+                                            // value: 'لا يوجد بيانات',
+                                            child: Text('لا يوجد بيانات'),
+                                          ),
+                                        ]
+                                      : cubitCountries.governmentData
+                                          .map(
+                                            (Governorate value) =>
+                                                PopupMenuItem<String>(
+                                              value: value.name,
+                                              child: Text(value.name),
+                                            ),
+                                          )
+                                          .toList();
+                                },
+                              ),
+                            ),
+                            Text(
+                              "القرية / المنطقة",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.w,
+                                  color: BrandColors.primary),
+                            ),
+                            SizedBox(height: 5.w),
+                            customTextField(
+                                startIcon: const Icon(Icons.location_city),
+                                hintText: 'برجاء ادخال اسم القرية او المنطقة',
+                                validator: (value) =>
+                                    Validator.generalField(value),
+                                isPassword: false,
+                                type: TextInputType.text,
+                                controller: cubit.villageController,
+                                endIcon: null),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            state is RegisterLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator())
+                                : Center(
+                                    child: customButton(
+                                        text: 'التالي',
+                                        onTap: () async {
+                                          cubit.register(
+                                              phone: widget.phone,
+                                              countryCode: widget.countryCode);
+                                        },
+                                        context: context),
+                                  ),
+                            SizedBox(
+                              height: 20.h,
                             ),
                           ],
                         ),
-                      )),
-                    ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "الاسم",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.w,
-                              color: BrandColors.primary),
-                        ),
-                        SizedBox(height: 5.w),
-                        customTextField(
-                          startIcon: const Icon(Icons.person),
-                          isPassword: false,
-                          type: TextInputType.emailAddress,
-                          controller: cubit.nameController,
-                          hintText: 'برجاء ادخال الاسم',
-                          endIcon: null,
-                          validator: (value) => Validator.name(value),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "كلمة المرور",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.w,
-                              color: BrandColors.primary),
-                        ),
-                        SizedBox(height: 5.w),
-                        customTextField(
-                            startIcon: const Icon(Icons.lock),
-                            isPassword: showPassword == false ? false : true,
-                            type: TextInputType.visiblePassword,
-                            onPressed: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
-                            validator: (value) => Validator.password(value),
-                            endIcon: showPassword == true
-                                ? const Icon(Icons.visibility_off)
-                                : const Icon(Icons.visibility),
-                            controller: cubit.passwordController,
-                            hintText: 'برجاء ادخال كلمة المرور'),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "تأكيد كلمة المرور",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.w,
-                              color: BrandColors.primary),
-                        ),
-                        SizedBox(height: 5.w),
-                        customTextField(
-                            startIcon: const Icon(Icons.lock),
-                            isPassword: showCoPassword == false ? false : true,
-                            type: TextInputType.visiblePassword,
-                            validator: (value) => Validator.confirmPassword(
-                                value, cubit.passwordController.text),
-                            onPressed: () {
-                              setState(() {
-                                showCoPassword = !showCoPassword;
-                              });
-                            },
-                            endIcon: showCoPassword == true
-                                ? const Icon(Icons.visibility_off)
-                                : const Icon(Icons.visibility),
-                            controller: cubit.coPasswordController,
-                            hintText: 'برجاء ادخال تأكيد كلمة المرور'),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "تاريخ الميلاد",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.w,
-                              color: BrandColors.primary),
-                        ),
-                        SizedBox(height: 5.w),
-                        customTextField(
-                            startIcon: const Icon(Icons.date_range),
-                            isPassword: false,
-                            readOnly: true,
-                            type: TextInputType.emailAddress,
-                            validator: (value) => Validator.generalField(value),
-                            controller: cubit.dateController,
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(1950),
-                                  lastDate: DateTime.now());
-                              if (pickedDate != null) {
-                                String formattedDate =
-                                    DateFormat('yyyy-MM-dd').format(pickedDate);
-                                setState(() {
-                                  cubit.dateController.text = formattedDate;
-                                });
-                              } else {}
-                            },
-                            hintText: 'برجاء اختيار تاريخ الميلاد',
-                            endIcon: null),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "النوع",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.w,
-                              color: BrandColors.primary),
-                        ),
-                        SizedBox(height: 5.w),
-                        customTextField(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  actionsAlignment: MainAxisAlignment.center,
-                                  title: const Center(
-                                      child: Text('برجاء اختيار النوع')),
-                                  actions: [
-                                    SizedBox(
-                                      height: 80.h,
-                                      width: 70.w,
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: items.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return ListTile(
-                                            contentPadding: EdgeInsets.zero,
-                                            title: Text(items[index]),
-                                            onTap: () {
-                                              setState(() {
-                                                dropdownvalue = items[index];
-                                                cubit.genderController.text =
-                                                    items[index];
-                                              });
-                                              Navigator.pop(context);
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-
-                            // showModalBottomSheet(
-                            //   context: context,
-                            //   builder: (BuildContext context) {
-                            //     return SizedBox(
-                            //       height: 150,
-                            //       child: ListView.builder(
-                            //         itemCount: items.length,
-                            //         itemBuilder:
-                            //             (BuildContext context, int index) {
-                            //           return ListTile(
-                            //             title: Text(items[index]),
-                            //             onTap: () {
-                            //               setState(() {
-                            //                 dropdownvalue = items[index];
-                            //                 cubit.genderController.text =
-                            //                     items[index];
-                            //               });
-                            //               Navigator.pop(context);
-                            //             },
-                            //           );
-                            //         },
-                            //       ),
-                            //     );
-                            //   },
-                            // );
-                          },
-                          startIcon: const Icon(Icons.male),
-                          hintText: 'برجاء اختيار النوع',
-                          readOnly: true,
-                          validator: (value) => Validator.generalField(value),
-                          isPassword: false,
-                          type: TextInputType.text,
-                          controller: cubit.genderController,
-                          endIcon: PopupMenuButton<String>(
-                            onSelected: (String newValue) {
-                              setState(() {
-                                dropdownvalue = newValue;
-                                cubit.genderController.text = newValue;
-                              });
-                            },
-                            itemBuilder: (BuildContext context) {
-                              return items
-                                  .map(
-                                    (String value) => PopupMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    ),
-                                  )
-                                  .toList();
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "المحافظة",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.w,
-                              color: BrandColors.primary),
-                        ),
-                        SizedBox(height: 5.w),
-                        customTextField(
-                          startIcon: const Icon(Icons.location_city),
-                          hintText: 'برجاء اختيار المحافظة',
-                          validator: (value) => Validator.generalField(value),
-                          readOnly: false,
-                          isPassword: false,
-                          type: TextInputType.text,
-                          controller: cubit.governorateController,
-                          endIcon: PopupMenuButton<String>(
-                            onSelected: (String newValue) {
-                              setState(() {
-                                dropdownvalue2 = newValue;
-                                cubit.governorateController.text =
-                                    dropdownvalue2;
-                              });
-                            },
-                            itemBuilder: (BuildContext context) {
-                              return governorates
-                                  .map(
-                                    (GovernoratesData value) =>
-                                        PopupMenuItem<String>(
-                                      value: value.governorateNameAr,
-                                      child: Text(value.governorateNameAr),
-                                      onTap: () {
-                                        _getCities(id: value.id);
-                                      },
-                                    ),
-                                  )
-                                  .toList();
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          "المدينة",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.w,
-                              color: BrandColors.primary),
-                        ),
-                        SizedBox(height: 5.w),
-                        customTextField(
-                          startIcon: const Icon(Icons.location_city),
-                          hintText: 'برجاء اختيار المدينة',
-                          validator: (value) => Validator.generalField(value),
-                          readOnly: false,
-                          isPassword: false,
-                          type: TextInputType.text,
-                          controller: cubit.cityController,
-                          endIcon: PopupMenuButton<String>(
-                            onSelected: (String newValue) {
-                              setState(() {
-                                dropdownvalue3 = newValue;
-                                cubit.cityController.text = dropdownvalue3;
-                              });
-                            },
-                            itemBuilder: (BuildContext context) {
-                              return cities
-                                  .map(
-                                    (CitiesData value) => PopupMenuItem<String>(
-                                      value: value.cityNameAr,
-                                      child: Text(value.cityNameAr),
-                                    ),
-                                  )
-                                  .toList();
-                            },
-                          ),
-                        ),
-                        Text(
-                          "القرية / المنطقة",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.w,
-                              color: BrandColors.primary),
-                        ),
-                        SizedBox(height: 5.w),
-                        customTextField(
-                            startIcon: const Icon(Icons.location_city),
-                            hintText: 'برجاء ادخال اسم القرية او المنطقة',
-                            validator: (value) => Validator.generalField(value),
-                            isPassword: false,
-                            type: TextInputType.text,
-                            controller: cubit.villageController,
-                            endIcon: null),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        state is RegisterLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : Center(
-                                child: customButton(
-                                    text: 'التالي',
-                                    onTap: () async {
-                                      cubit.register(
-                                          phone: widget.phone,
-                                          countryCode: widget.countryCode);
-                                    },
-                                    context: context),
-                              ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           );
         },
       ),
