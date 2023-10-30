@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/app_storage.dart';
-import 'package:shared/cubits/get_governments_countries_cubit/cubit/getgovernmentsandcountries_cubit.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
 import 'package:shared/firebase_options.dart';
 import 'package:shared/screens/splash_screen.dart';
@@ -13,6 +12,7 @@ import 'core/utils/bloc_observer.dart';
 import 'core/utils/cache_helper.dart';
 import 'core/utils/magic_router.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'cubits/get_governments_countries_cubit/cubit/getgovernmentsandcountries_cubit.dart';
 import 'cubits/register_cubit/cubit/register_cubit.dart';
 
 void main() async {
@@ -62,7 +62,9 @@ class _MyAppState extends State<MyApp> {
           create: (context) => GetGovernmentsAndCountriesCubit()
             ..getCountries()
             ..getGovernments(
-                countryId: (CacheHelper.getData(key: 'countryId'))),
+                countryId: (CacheHelper.getData(key: 'countryId')) ?? 1)
+            ..getCities(
+                governmentId: CacheHelper.getData(key: 'governmentId') ?? 2),
         ),
       ],
       child: ScreenUtilInit(

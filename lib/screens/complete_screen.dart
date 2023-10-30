@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,11 +8,10 @@ import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/cache_helper.dart';
 import 'package:shared/cubits/get_governments_countries_cubit/cubit/getgovernmentsandcountries_cubit.dart';
 import 'package:shared/cubits/register_cubit/cubit/register_cubit.dart';
-import 'package:shared/models/cities_model.dart';
-import 'package:shared/models/governorates_model.dart';
 import 'package:shared/widgets/custom_button.dart';
 import 'package:shared/widgets/custom_text_field.dart';
 import '../core/utils/validator.dart';
+import '../models/get_cities_model.dart';
 import '../models/get_countries_model.dart';
 import '../models/get_government_model.dart';
 
@@ -57,52 +54,53 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
   late String dropdownvalue;
   late String dropdownvalue2;
   late String dropdownvalue3;
+  late String dropdownvalue4;
   final List<String> items = [
     'male',
     'female',
   ];
 
-  List<GovernoratesData> governorates = [];
-  List<CitiesData> cities = [];
+  // List<GovernoratesData> governorates = [];
+  // List<CitiesData> cities = [];
 
-  Future<void> _getGovernorates() async {
-    final String jsonData =
-        await rootBundle.loadString('assets/json/governorates.json');
-    final List<dynamic> data = jsonDecode(jsonData)["data"];
+  // Future<void> _getGovernorates() async {
+  //   final String jsonData =
+  //       await rootBundle.loadString('assets/json/governorates.json');
+  //   final List<dynamic> data = jsonDecode(jsonData)["data"];
 
-    final List<GovernoratesData> parsedData = data.map((item) {
-      return GovernoratesData(
-        governorateNameAr: item["governorate_name_ar"], id: item["id"],
-        governorateNameEn:
-            item["governorate_name_en"], // Make sure this matches the JSON key
-        // Map other fields here
-      );
-    }).toList();
+  //   final List<GovernoratesData> parsedData = data.map((item) {
+  //     return GovernoratesData(
+  //       governorateNameAr: item["governorate_name_ar"], id: item["id"],
+  //       governorateNameEn:
+  //           item["governorate_name_en"], // Make sure this matches the JSON key
+  //       // Map other fields here
+  //     );
+  //   }).toList();
 
-    setState(() {
-      governorates = parsedData;
-    });
-  }
+  //   setState(() {
+  //     governorates = parsedData;
+  //   });
+  // }
 
-  Future<void> _getCities({required String id}) async {
-    final String jsonData =
-        await rootBundle.loadString('assets/json/cities.json');
-    final List<dynamic> data = await jsonDecode(jsonData)["data"];
-    final List<CitiesData> parsedData = data.map((item) {
-      return CitiesData(
-          id: item["id"],
-          governorateId: item["governorate_id"],
-          cityNameAr: item["city_name_ar"],
-          cityNameEn: item["city_name_en"]);
-    }).toList();
-    setState(() {
-      cities = parsedData.where((city) => city.governorateId == id).toList();
-    });
-  }
+  // Future<void> _getCities({required String id}) async {
+  //   final String jsonData =
+  //       await rootBundle.loadString('assets/json/cities.json');
+  //   final List<dynamic> data = await jsonDecode(jsonData)["data"];
+  //   final List<CitiesData> parsedData = data.map((item) {
+  //     return CitiesData(
+  //         id: item["id"],
+  //         governorateId: item["governorate_id"],
+  //         cityNameAr: item["city_name_ar"],
+  //         cityNameEn: item["city_name_en"]);
+  //   }).toList();
+  //   setState(() {
+  //     cities = parsedData.where((city) => city.governorateId == id).toList();
+  //   });
+  // }
 
   @override
   void initState() {
-    _getGovernorates();
+    // _getGovernorates();
     super.initState();
   }
 
@@ -401,15 +399,13 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                                             PopupMenuItem<String>(
                                           value: value.name,
                                           child: Text(value.name),
-                                          onTap: () {
-                                            cubitCountries.getGovernments(
+                                          onTap: () async {
+                                            await cubitCountries.getGovernments(
                                                 countryId: value.id);
-                                            CacheHelper.saveData(
+                                            await CacheHelper.saveData(
                                                 key: 'countryId',
                                                 value: value.id);
-                                            print(CacheHelper.getData(
-                                                key: 'countryId'));
-                                            // _getCities(id: value.id.toString());
+                                            //  print('countryId:${value.id}');
                                           },
                                         ),
                                       )
@@ -458,6 +454,15 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                                                 PopupMenuItem<String>(
                                               value: value.name,
                                               child: Text(value.name),
+                                              onTap: () async {
+                                                await cubitCountries.getCities(
+                                                    governmentId: value.id);
+                                                await CacheHelper.saveData(
+                                                    key: 'governmentId',
+                                                    value: value.id);
+                                                // print(
+                                                //     'governmentId:${value.id}');
+                                              },
                                             ),
                                           )
                                           .toList();
@@ -473,14 +478,42 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                             ),
                             SizedBox(height: 5.w),
                             customTextField(
-                                startIcon: const Icon(Icons.location_city),
-                                hintText: 'برجاء ادخال اسم القرية او المنطقة',
-                                validator: (value) =>
-                                    Validator.generalField(value),
-                                isPassword: false,
-                                type: TextInputType.text,
-                                controller: cubit.villageController,
-                                endIcon: null),
+                              startIcon: const Icon(Icons.location_city),
+                              hintText: 'برجاء ادخال اسم القرية او المنطقة',
+                              validator: (value) =>
+                                  Validator.generalField(value),
+                              readOnly: true,
+                              isPassword: false,
+                              type: TextInputType.text,
+                              controller: cubit.villageController,
+                              endIcon: PopupMenuButton<String>(
+                                onSelected: (String newValue) {
+                                  setState(() {
+                                    dropdownvalue4 = newValue;
+                                    cubit.villageController.text =
+                                        dropdownvalue4;
+                                  });
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return cubitCountries.cityData.isEmpty
+                                      ? <PopupMenuEntry<String>>[
+                                          const PopupMenuItem<String>(
+                                            // value: 'لا يوجد بيانات',
+                                            child: Text('لا يوجد بيانات'),
+                                          ),
+                                        ]
+                                      : cubitCountries.cityData
+                                          .map(
+                                            (City value) =>
+                                                PopupMenuItem<String>(
+                                              value: value.name,
+                                              child: Text(value.name),
+                                            ),
+                                          )
+                                          .toList();
+                                },
+                              ),
+                            ),
                             SizedBox(
                               height: 20.h,
                             ),

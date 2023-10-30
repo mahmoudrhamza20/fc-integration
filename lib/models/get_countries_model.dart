@@ -40,7 +40,7 @@ class GetCountriesModel {
 }
 
 class CountriesData {
-  List<Country> countries;
+  List<Country>? countries;
 
   CountriesData({
     required this.countries,
@@ -52,7 +52,7 @@ class CountriesData {
       );
 
   Map<String, dynamic> toJson() => {
-        "countries": List<dynamic>.from(countries.map((x) => x.toJson())),
+        "countries": List<dynamic>.from(countries!.map((x) => x.toJson())),
       };
 }
 

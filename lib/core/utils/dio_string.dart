@@ -26,6 +26,10 @@ class EndPoints {
     return 'governorates/$countryId';
   }
 
+  static String cities({required int governmentId}) {
+    return 'cities/$governmentId';
+  }
+
   static String stageById({required int id}) {
     return 'stages/$id';
   }
