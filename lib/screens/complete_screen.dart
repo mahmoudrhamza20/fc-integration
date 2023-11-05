@@ -11,7 +11,6 @@ import 'package:shared/cubits/register_cubit/cubit/register_cubit.dart';
 import 'package:shared/widgets/custom_button.dart';
 import 'package:shared/widgets/custom_text_field.dart';
 import '../core/utils/validator.dart';
-import '../models/get_cities_model.dart';
 import '../models/get_countries_model.dart';
 import '../models/get_government_model.dart';
 
@@ -47,10 +46,6 @@ class CompleteProfileScreenBody extends StatefulWidget {
 class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
   bool showPassword = true;
   bool showCoPassword = true;
-  late String countryValue;
-  late String? stateValue;
-  late String? cityValue;
-  late String? address;
   late String dropdownvalue;
   late String dropdownvalue2;
   late String dropdownvalue3;
@@ -368,7 +363,7 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                               height: 10.h,
                             ),
                             Text(
-                              "المحافظة",
+                              "الدولة",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14.w,
@@ -377,7 +372,7 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                             SizedBox(height: 5.w),
                             customTextField(
                               startIcon: const Icon(Icons.location_city),
-                              hintText: 'برجاء اختيار المحافظة',
+                              hintText: 'برجاء اختيار الدولة',
                               validator: (value) =>
                                   Validator.generalField(value),
                               readOnly: true,
@@ -417,7 +412,7 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                               height: 10.h,
                             ),
                             Text(
-                              "المدينة",
+                              "المحافظة / المنطقة",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14.w,
@@ -426,7 +421,7 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                             SizedBox(height: 5.w),
                             customTextField(
                               startIcon: const Icon(Icons.location_city),
-                              hintText: 'برجاء اختيار المدينة',
+                              hintText: 'برجاء اختيار المحافظة / المنطقة',
                               validator: (value) =>
                                   Validator.generalField(value),
                               readOnly: true,
@@ -469,50 +464,64 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                                 },
                               ),
                             ),
+                            SizedBox(height: 10.w),
                             Text(
-                              "القرية / المنطقة",
+                              "القرية / الشارع",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14.w,
                                   color: BrandColors.primary),
                             ),
                             SizedBox(height: 5.w),
+                            // customTextField(
+                            //   startIcon: const Icon(Icons.location_city),
+                            //   hintText: ' او الشارع برجاء ادخال اسم القرية او المنطقة',
+                            //   validator: (value) =>
+                            //       Validator.generalField(value),
+                            //   readOnly: true,
+                            //   isPassword: false,
+                            //   type: TextInputType.text,
+                            //   controller: cubit.villageController,
+                            //   endIcon: PopupMenuButton<String>(
+                            //     onSelected: (String newValue) {
+                            //       setState(() {
+                            //         dropdownvalue4 = newValue;
+                            //         cubit.villageController.text =
+                            //             dropdownvalue4;
+                            //       });
+                            //     },
+                            //     itemBuilder: (BuildContext context) {
+                            //       return cubitCountries.cityData.isEmpty
+                            //           ? <PopupMenuEntry<String>>[
+                            //               const PopupMenuItem<String>(
+                            //                 // value: 'لا يوجد بيانات',
+                            //                 child: Text('لا يوجد بيانات'),
+                            //               ),
+                            //             ]
+                            //           : cubitCountries.cityData
+                            //               .map(
+                            //                 (City value) =>
+                            //                     PopupMenuItem<String>(
+                            //                   value: value.name,
+                            //                   child: Text(value.name),
+                            //                 ),
+                            //               )
+                            //               .toList();
+                            //     },
+                            //   ),
+                            // ),
+
                             customTextField(
                               startIcon: const Icon(Icons.location_city),
-                              hintText: 'برجاء ادخال اسم القرية او المنطقة',
+                              hintText: 'برجاء ادخال اسم القرية او الشارع',
+                              // hintText: 'برجاء ادخال اسم القرية او المنطقة',
                               validator: (value) =>
                                   Validator.generalField(value),
-                              readOnly: true,
+                              readOnly: false,
                               isPassword: false,
                               type: TextInputType.text,
                               controller: cubit.villageController,
-                              endIcon: PopupMenuButton<String>(
-                                onSelected: (String newValue) {
-                                  setState(() {
-                                    dropdownvalue4 = newValue;
-                                    cubit.villageController.text =
-                                        dropdownvalue4;
-                                  });
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return cubitCountries.cityData.isEmpty
-                                      ? <PopupMenuEntry<String>>[
-                                          const PopupMenuItem<String>(
-                                            // value: 'لا يوجد بيانات',
-                                            child: Text('لا يوجد بيانات'),
-                                          ),
-                                        ]
-                                      : cubitCountries.cityData
-                                          .map(
-                                            (City value) =>
-                                                PopupMenuItem<String>(
-                                              value: value.name,
-                                              child: Text(value.name),
-                                            ),
-                                          )
-                                          .toList();
-                                },
-                              ),
+                              endIcon: null,
                             ),
                             SizedBox(
                               height: 20.h,

@@ -84,7 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const InputDecoration(
                                           hintText: 'أبحث عن البلد')),
                               languageCode: "ar",
-                              // countries: const [
+
+                              // countries:
+                              // const [
                               //   Country(
                               //       flag: '🇪🇬',
                               //       name: 'مصر',
