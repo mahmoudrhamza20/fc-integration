@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -170,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderSide: const BorderSide(
                                         width: 1, color: BrandColors.primary)),
                                 hintMaxLines: 1,
-                                hintText: 'رقم الهاتف',
+                                hintText: 'رقم الهاتف (برجاء عدم كنتبة 0)',
                                 hintStyle: TextStyle(
                                     fontSize: 14.sp,
                                     fontFamily: 'Poppins',
@@ -179,9 +178,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               initialCountryCode: 'EG',
                               onChanged: (phone) {
                                 setState(() {
-                                  countryCode = phone.countryCode;
+                                  countryCode = phone.countryCode.substring(1);
                                 });
-                                log(countryCode.toString());
+                                print(countryCode.toString());
                               },
                             ),
                             // customTextField(

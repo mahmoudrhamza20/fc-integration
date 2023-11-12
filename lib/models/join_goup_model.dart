@@ -126,7 +126,7 @@ String joinGroupModelToJson(JoinGroupModel data) => json.encode(data.toJson());
 
 class JoinGroupModel {
   bool result;
-  String message;
+  dynamic message;
   int status;
   JoinGroupData data;
 
@@ -173,10 +173,10 @@ class JoinGroupData {
 }
 
 class JoinGroup {
-  int id;
-  String groupNumber;
-  String name;
-  String stage;
+  dynamic id;
+  dynamic groupNumber;
+  dynamic name;
+  dynamic stage;
   Founder founder;
 
   JoinGroup({
@@ -205,9 +205,9 @@ class JoinGroup {
 }
 
 class Founder {
-  int id;
-  String name;
-  String phone;
+  dynamic id;
+  dynamic name;
+  dynamic phone;
 
   Founder({
     required this.id,

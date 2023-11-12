@@ -93,13 +93,13 @@ class FirstStageScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    cubit.searchGroup!.isEmpty
+                    cubit.searchGroup.isEmpty
                         ? Container()
                         : SizedBox(
                             height: 50,
                             child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: cubit.searchGroup!.length,
+                                itemCount: cubit.searchGroup.length,
                                 itemBuilder: (BuildContext context,
                                         int index) =>
                                     Center(
@@ -126,7 +126,7 @@ class FirstStageScreen extends StatelessWidget {
                                               .groups[index].founder.id,
                                         )),
                                         child: Text(
-                                          cubit.searchGroup![index].groupNumber,
+                                          cubit.searchGroup[index].groupNumber,
                                           style: TextStyle(
                                               fontSize: 16.sp,
                                               fontWeight: FontWeight.bold),
@@ -140,42 +140,49 @@ class FirstStageScreen extends StatelessWidget {
                           fontSize: 16.sp, color: BrandColors.primary),
                     ),
                     SizedBox(height: 10.h),
-                    SizedBox(
-                      height: 150,
-                      child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: cubit.suggestedGroup!.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            Center(
-                          child: InkWell(
-                            onTap: () => MagicRouter.navigateTo(
-                                SuggesionGroupDetailsScreen(
-                              groupId: cubit.suggestedGroup![index].id,
-                              founderId:
-                                  cubit.suggestedGroup![index].founder.id,
-                              // searchGroup: cubit.searchData!.groups[index],
-                              stage: cubit.suggestedGroup![index].stage,
-                              groupNumber:
-                                  cubit.suggestedGroup![index].groupNumber,
-                              founderName:
-                                  cubit.suggestedGroup![index].founder.name,
-                              founderPhone:
-                                  cubit.suggestedGroup![index].founder.phone,
-                              currency: cubit.suggestedGroup![index].currency,
-                              value: cubit.suggestedGroup![index].value,
-                            )),
-                            child: Center(
-                              child: Text(
-                                cubit.suggestedGroup![index].groupNumber,
-                                style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold),
+                    cubit.suggestedGroup.isEmpty
+                        ? Text(
+                            "لا يوجد",
+                            style: TextStyle(
+                                fontSize: 16.sp, color: BrandColors.primary),
+                          )
+                        : SizedBox(
+                            height: 150,
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: cubit.suggestedGroup.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  Center(
+                                child: InkWell(
+                                  onTap: () => MagicRouter.navigateTo(
+                                      SuggesionGroupDetailsScreen(
+                                    groupId: cubit.suggestedGroup[index].id,
+                                    founderId:
+                                        cubit.suggestedGroup[index].founder.id,
+                                    // searchGroup: cubit.searchData!.groups[index],
+                                    stage: cubit.suggestedGroup[index].stage,
+                                    groupNumber:
+                                        cubit.suggestedGroup[index].groupNumber,
+                                    founderName: cubit
+                                        .suggestedGroup[index].founder.name,
+                                    founderPhone: cubit
+                                        .suggestedGroup[index].founder.phone,
+                                    currency:
+                                        cubit.suggestedGroup[index].currency,
+                                    value: cubit.suggestedGroup[index].value,
+                                  )),
+                                  child: Center(
+                                    child: Text(
+                                      cubit.suggestedGroup[index].groupNumber,
+                                      style: TextStyle(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    )
+                          )
                   ]),
                 ),
               );

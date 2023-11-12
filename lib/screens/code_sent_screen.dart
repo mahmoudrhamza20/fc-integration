@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -76,10 +74,10 @@ class CodeSentScreen extends StatelessWidget {
                               onTap: () {
                                 cubit.joinGroup(
                                     groupId: groupId, oldUser: founderId);
-                                log(
+                                print(
                                   groupId.toString(),
                                 );
-                                log(founderId.toString());
+                                print(founderId.toString());
                                 // if (
                                 //   formKey.currentState!.validate()) {
                                 //   MagicRouter.navigateTo(const AcceptJoinToGroupScreen());

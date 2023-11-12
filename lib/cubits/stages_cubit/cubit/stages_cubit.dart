@@ -17,10 +17,10 @@ class StagesCubit extends Cubit<StagesState> {
   StagesData? stagesData;
   late List<Stage>? stage = [];
   StageId? stageById;
-  List<SearchGroup>? searchGroup = [];
+  List<SearchGroup> searchGroup = [];
   //SearchGroup? searchGroup2;
   SearchData? searchData;
-  late List<SuggestedGroup>? suggestedGroup = [];
+  late List<SuggestedGroup> suggestedGroup = [];
   GetStagesByIdData? stagesByIdData;
 
   final codeController = TextEditingController();
@@ -55,7 +55,10 @@ class StagesCubit extends Cubit<StagesState> {
     res.fold(
       (err) {
         showSnackBar(err);
+        print('err');
         print(err);
+        print('err');
+
         emit(StagesByIdError());
       },
       (res) async {

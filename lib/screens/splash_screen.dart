@@ -1,7 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -307,10 +306,10 @@ class _SecondPageState extends State<SecondPage> {
                                 borderRadius: BorderRadius.circular(14.r),
                                 borderSide: const BorderSide(
                                     width: 1, color: BrandColors.primary)),
-                            hintMaxLines: 1,
-                            hintText: 'رقم الهاتف',
+                            hintMaxLines: 2,
+                            hintText: ' رقم الهاتف (برجاء عدم كنتبة 0)',
                             hintStyle: TextStyle(
-                                fontSize: 14.sp,
+                                fontSize: 12.sp,
                                 fontFamily: 'Poppins',
                                 color: HexColor('#B5B5B5')),
                           ),
@@ -318,10 +317,10 @@ class _SecondPageState extends State<SecondPage> {
                           onChanged: (phone) {
                             //  print(phone.countryCode);
                             setState(() {
-                              countryCode = phone.countryCode;
+                              countryCode = phone.countryCode.substring(1);
                             });
-                            log(countryCode.toString());
-                            // print(phone.completeNumber);
+                            print(countryCode!.toString());
+                            //  print(phone.completeNumber);
                           },
                         ),
                         SizedBox(height: 20.h),
@@ -332,7 +331,7 @@ class _SecondPageState extends State<SecondPage> {
                                   text: 'تسجيل',
                                   onTap: () {
                                     cubit.checkPhone(countryCode: countryCode!);
-                                    // print(countryCode);
+                                    print(countryCode!);
                                   },
                                   context: context),
                         ),
