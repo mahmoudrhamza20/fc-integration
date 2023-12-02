@@ -58,13 +58,13 @@ class CountriesData {
 
 class Country {
   int id;
-  String name;
-  String iso;
-  String flag;
-  String currency;
-  String currencySymbol;
-  String maxNumber;
-  String countryCode;
+  dynamic name;
+  dynamic iso;
+  dynamic flag;
+  dynamic currency;
+  dynamic currencySymbol;
+  dynamic maxNumber;
+  dynamic countryCode;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -84,7 +84,7 @@ class Country {
   factory Country.fromJson(Map<String, dynamic> json) => Country(
         id: json["id"],
         name: json["name"],
-        iso: json["iso"],
+        iso: json["iso_code"],
         flag: json["flag"],
         currency: json["currency"],
         currencySymbol: json["currency_symbol"],
@@ -97,7 +97,7 @@ class Country {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "iso": iso,
+        "iso_code": iso,
         "flag": flag,
         "currency": currency,
         "currency_symbol": currencySymbol,

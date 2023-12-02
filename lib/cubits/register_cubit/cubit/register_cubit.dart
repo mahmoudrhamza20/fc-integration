@@ -23,22 +23,29 @@ class RegisterCubit extends Cubit<RegisterState> {
   final governorateController = TextEditingController();
   final cityController = TextEditingController();
   final villageController = TextEditingController();
+  final streetController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
 
-  Future register({required String phone, required String countryCode}) async {
+  Future register(
+      {required String phone,
+      required String countryCode,
+      required int? governorateId,
+      required int? cityId,
+      required int? countryId}) async {
     if (formKey.currentState!.validate()) {
       emit(RegisterLoading());
       final res = await registerRepo.register(
         phone: phone,
         countryCode: countryCode,
-        cityController: cityController.text,
+        countryId: countryId.toString(),
         dateOfBirth: dateController.text,
         gender: genderController.text,
-        governorate: governorateController.text,
+        governorateId: governorateId.toString(),
         passwordConfermation: coPasswordController.text,
-        villageController: villageController.text,
+        cityId: cityId.toString(),
         name: nameController.text,
         password: passwordController.text,
+        street: streetController.text,
         token: await AppFunc.getTokenDevice(),
       );
       res.fold(

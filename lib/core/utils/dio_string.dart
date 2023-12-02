@@ -16,7 +16,7 @@ class EndPoints {
   static const String search = 'search';
   static const String joinGroup = 'joinGroup';
   static const String establishGroup = 'establishGroup';
-  static const String searchKeywords = 'groupNumber?numbers=2';
+  // static const String searchKeywords = 'groupNumber?numbers=2';
 
   static String groupById({required int id}) {
     return 'groups/$id';
@@ -34,7 +34,7 @@ class EndPoints {
     return 'stages/$id';
   }
 
-  // static String searchKeywords({required int id}) {
-  //   return 'groupNumber?numbers=$id';
-  // }
+  static String searchKeywords({required int id}) {
+    return 'groupNumber?numbers=$id';
+  }
 }

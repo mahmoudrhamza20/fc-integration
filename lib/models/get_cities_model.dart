@@ -55,7 +55,7 @@ class CitiesData {
 
 class City {
   int id;
-  String name;
+  dynamic name;
 
   City({
     required this.id,

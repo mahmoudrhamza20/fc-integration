@@ -33,9 +33,9 @@ class GetGroupsCubit extends Cubit<GetGroupsState> {
     );
   }
 
-  Future getGroupsById({required int groubId}) async {
+  Future getGroupsById({required int groupId}) async {
     emit(GetGroupsIdLoading());
-    final res = await getGroupsRepo.getGroupsById(groubId: groubId);
+    final res = await getGroupsRepo.getGroupsById(groubId: groupId);
     res.fold(
       (err) {
         showSnackBar(err);
@@ -50,9 +50,9 @@ class GetGroupsCubit extends Cubit<GetGroupsState> {
     );
   }
 
-  Future searchKeywords() async {
+  Future searchKeywords({required int groupId}) async {
     emit(SearchKeywordsLoading());
-    final res = await getGroupsRepo.searchKeywords();
+    final res = await getGroupsRepo.searchKeywords(groupId: groupId);
     res.fold(
       (err) {
         showSnackBar(err);

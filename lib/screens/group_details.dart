@@ -9,7 +9,7 @@ import 'package:shared/widgets/custom_card.dart';
 class GroupDetails extends StatelessWidget {
   const GroupDetails({
     super.key,
-    required this.groubId,
+    required this.groupId,
     required this.name,
     required this.stage,
     required this.groupNumber,
@@ -18,7 +18,7 @@ class GroupDetails extends StatelessWidget {
     //  required this.groupById
   });
 
-  final int groubId;
+  final int groupId;
   final String name;
   final String stage;
   final String groupNumber;
@@ -36,8 +36,8 @@ class GroupDetails extends StatelessWidget {
         ),
         body: BlocProvider(
           create: (context) => GetGroupsCubit()
-            ..searchKeywords()
-            ..getGroupsById(groubId: groubId),
+            ..searchKeywords(groupId: groupId)
+            ..getGroupsById(groupId: groupId),
           child: BlocBuilder<GetGroupsCubit, GetGroupsState>(
             builder: (context, state) {
               final cubit = GetGroupsCubit.of(context);
@@ -105,7 +105,7 @@ class GroupDetails extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return Center(
                                   child: Text(
-                                    cubit.codes![index],
+                                    cubit.codes![index].toString(),
                                     // '${index + 111}',
                                     style: const TextStyle(
                                         color: BrandColors.primary,

@@ -275,7 +275,7 @@ class BuildRow extends StatelessWidget {
             onPressed: () {
               MagicRouter.navigateTo(GroupDetails(
                 groupNumber: groupData.groupNumber.toString(),
-                groubId: groupData.id,
+                groupId: groupData.id,
                 name: groupData.name,
                 stage: groupData.stage,
                 value: groupData.value.toString(),

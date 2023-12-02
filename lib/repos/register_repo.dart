@@ -15,9 +15,10 @@ class RegisterRepo {
     required String passwordConfermation,
     required String password,
     required String dateOfBirth,
-    required String governorate,
-    required String cityController,
-    required String villageController,
+    required String governorateId,
+    required String cityId,
+    required String countryId,
+    required String street,
     required String token,
   }) async {
     final response = await DioHelper.post(EndPoints.register, body: {
@@ -28,24 +29,20 @@ class RegisterRepo {
       'gender': gender,
       'confirm_password': passwordConfermation,
       'dob': dateOfBirth,
-      'country': governorate,
-      'address': cityController,
-      'region': villageController,
+      'governorate_id': governorateId,
+      'city_id': cityId,
+      'country_id': countryId,
+      'street': countryId,
       'device_token': token,
     }, headers: {
       'Accept-Language': 'ar',
       'Accept': 'application/json'
     });
-    print(cityController);
+
     print(phone);
-    print(name);
-    print(password);
     print(gender);
-    print(passwordConfermation);
-    print(villageController);
-    print(dateOfBirth);
-    print(governorate);
-    print(cityController);
+    print(cityId);
+    print(countryId);
     print(token);
     try {
       if (response.statusCode == 200 &&

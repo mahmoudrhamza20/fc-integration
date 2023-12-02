@@ -58,8 +58,10 @@ class GetGroupsRepo {
     }
   }
 
-  Future<Either<String, SearchKeywordsModel>> searchKeywords() async {
-    final response = await DioHelper.get(EndPoints.searchKeywords, headers: {
+  Future<Either<String, SearchKeywordsModel>> searchKeywords(
+      {required int groupId}) async {
+    final response =
+        await DioHelper.get(EndPoints.searchKeywords(id: groupId), headers: {
       'Accept-Language': 'ar',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${AppStorage.getToken}'

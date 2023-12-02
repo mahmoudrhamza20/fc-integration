@@ -8,6 +8,7 @@ import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/core/utils/cache_helper.dart';
 import 'package:shared/cubits/get_governments_countries_cubit/cubit/getgovernmentsandcountries_cubit.dart';
 import 'package:shared/cubits/register_cubit/cubit/register_cubit.dart';
+import 'package:shared/models/get_cities_model.dart';
 import 'package:shared/widgets/custom_button.dart';
 import 'package:shared/widgets/custom_text_field.dart';
 import '../core/utils/validator.dart';
@@ -112,35 +113,35 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
               final cubitCountries =
                   GetGovernmentsAndCountriesCubit.of(context);
               return SingleChildScrollView(
-                child: Form(
-                  key: cubit.formKey,
-                  child: Column(
-                    children: [
-                      ClipPath(
-                        clipper: WaveClipperTwo(),
-                        child: Container(
-                          height: 200,
-                          color: BrandColors.primary,
-                          child: Center(
-                              child: Padding(
-                            padding: EdgeInsets.only(top: 50.h),
-                            child: const Column(
-                              children: [
-                                Text(
-                                  "مرحبا بك",
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                Text(
-                                  "برجاء استكمال البيانات",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          )),
-                        ),
+                child: Column(
+                  children: [
+                    ClipPath(
+                      clipper: WaveClipperTwo(),
+                      child: Container(
+                        height: 200,
+                        color: BrandColors.primary,
+                        child: Center(
+                            child: Padding(
+                          padding: EdgeInsets.only(top: 50.h),
+                          child: const Column(
+                            children: [
+                              Text(
+                                "مرحبا بك",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                "برجاء استكمال البيانات",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        )),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                      child: Form(
+                        key: cubit.formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -466,87 +467,118 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                             ),
                             SizedBox(height: 10.w),
                             Text(
-                              "القرية / الشارع",
+                              "المدينة",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14.w,
                                   color: BrandColors.primary),
                             ),
                             SizedBox(height: 5.w),
-                            // customTextField(
-                            //   startIcon: const Icon(Icons.location_city),
-                            //   hintText: ' او الشارع برجاء ادخال اسم القرية او المنطقة',
-                            //   validator: (value) =>
-                            //       Validator.generalField(value),
-                            //   readOnly: true,
-                            //   isPassword: false,
-                            //   type: TextInputType.text,
-                            //   controller: cubit.villageController,
-                            //   endIcon: PopupMenuButton<String>(
-                            //     onSelected: (String newValue) {
-                            //       setState(() {
-                            //         dropdownvalue4 = newValue;
-                            //         cubit.villageController.text =
-                            //             dropdownvalue4;
-                            //       });
-                            //     },
-                            //     itemBuilder: (BuildContext context) {
-                            //       return cubitCountries.cityData.isEmpty
-                            //           ? <PopupMenuEntry<String>>[
-                            //               const PopupMenuItem<String>(
-                            //                 // value: 'لا يوجد بيانات',
-                            //                 child: Text('لا يوجد بيانات'),
-                            //               ),
-                            //             ]
-                            //           : cubitCountries.cityData
-                            //               .map(
-                            //                 (City value) =>
-                            //                     PopupMenuItem<String>(
-                            //                   value: value.name,
-                            //                   child: Text(value.name),
-                            //                 ),
-                            //               )
-                            //               .toList();
-                            //     },
-                            //   ),
-                            // ),
-
                             customTextField(
                               startIcon: const Icon(Icons.location_city),
-                              hintText: 'برجاء ادخال اسم القرية او الشارع',
-                              // hintText: 'برجاء ادخال اسم القرية او المنطقة',
+                              hintText: 'برجاء اختيار المدينة',
                               validator: (value) =>
                                   Validator.generalField(value),
-                              readOnly: false,
+                              readOnly: true,
                               isPassword: false,
                               type: TextInputType.text,
                               controller: cubit.villageController,
-                              endIcon: null,
+                              endIcon: PopupMenuButton<String>(
+                                onSelected: (String newValue) {
+                                  setState(() {
+                                    dropdownvalue4 = newValue;
+                                    cubit.villageController.text =
+                                        dropdownvalue4;
+                                  });
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return cubitCountries.cityData.isEmpty
+                                      ? <PopupMenuEntry<String>>[
+                                          const PopupMenuItem<String>(
+                                            // value: 'لا يوجد بيانات',
+                                            child: Text('لا يوجد بيانات'),
+                                          ),
+                                        ]
+                                      : cubitCountries.cityData
+                                          .map(
+                                            (City value) =>
+                                                PopupMenuItem<String>(
+                                              value: value.name,
+                                              child: Text(value.name),
+                                              onTap: () async {
+                                                // await cubitCountries.getCities(
+                                                //     governmentId: value.id);
+                                                await CacheHelper.saveData(
+                                                    key: 'cityId',
+                                                    value: value.id);
+                                                print('cityId:${value.id}');
+                                              },
+                                            ),
+                                          )
+                                          .toList();
+                                },
+                              ),
                             ),
                             SizedBox(
-                              height: 20.h,
-                            ),
-                            state is RegisterLoading
-                                ? const Center(
-                                    child: CircularProgressIndicator())
-                                : Center(
-                                    child: customButton(
-                                        text: 'التالي',
-                                        onTap: () async {
-                                          cubit.register(
-                                              phone: widget.phone,
-                                              countryCode: widget.countryCode);
-                                        },
-                                        context: context),
-                                  ),
-                            SizedBox(
-                              height: 20.h,
+                              height: 10.h,
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "القرية / الشارع",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.w,
+                                color: BrandColors.primary),
+                          ),
+                          SizedBox(height: 5.w),
+                          customTextField(
+                            startIcon: const Icon(Icons.location_city),
+                            hintText:
+                                'برجاء ادخال اسم القرية او الشارع (اختيارى)',
+                            // hintText: 'برجاء ادخال اسم القرية او المنطقة',
+                            validator: (value) => Validator.generalField(value),
+                            readOnly: false,
+                            isPassword: false,
+                            type: TextInputType.text,
+                            controller: cubit.streetController,
+                            endIcon: null,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                        ],
+                      ),
+                    ),
+                    state is RegisterLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : Center(
+                            child: customButton(
+                                text: 'التالي',
+                                onTap: () async {
+                                  cubit.register(
+                                    phone: widget.phone,
+                                    countryCode: widget.countryCode,
+                                    governorateId: CacheHelper.getData(
+                                            key: 'governmentId') ??
+                                        1,
+                                    countryId:
+                                        CacheHelper.getData(key: 'countryId') ??
+                                            1,
+                                    cityId:
+                                        CacheHelper.getData(key: 'cityId') ?? 1,
+                                  );
+                                },
+                                context: context),
+                          ),
+                  ],
                 ),
               );
             },
@@ -556,27 +588,27 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
     );
   }
 
-  void _showDropdown(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text(items[index]),
-                onTap: () {
-                  setState(() {
-                    dropdownvalue = items[index];
-                  });
-                  Navigator.pop(context);
-                },
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
+  // void _showDropdown(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return SizedBox(
+  //         child: ListView.builder(
+  //           itemCount: items.length,
+  //           itemBuilder: (BuildContext context, int index) {
+  //             return ListTile(
+  //               title: Text(items[index]),
+  //               onTap: () {
+  //                 setState(() {
+  //                   dropdownvalue = items[index];
+  //                 });
+  //                 Navigator.pop(context);
+  //               },
+  //             );
+  //           },
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }

@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
             ..getGovernments(
                 countryId: (CacheHelper.getData(key: 'countryId')) ?? 1)
             ..getCities(
-                governmentId: CacheHelper.getData(key: 'governmentId') ?? 2),
+                governmentId: CacheHelper.getData(key: 'governmentId') ?? 1),
         ),
       ],
       child: ScreenUtilInit(

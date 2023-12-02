@@ -58,8 +58,8 @@ class GovernmentData {
 
 class Governorate {
   int id;
-  String name;
-  String countryId;
+  dynamic name;
+  dynamic countryId;
   DateTime createdAt;
   DateTime updatedAt;
 

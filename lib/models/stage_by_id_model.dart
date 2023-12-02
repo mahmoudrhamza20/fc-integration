@@ -62,9 +62,9 @@ class StageId {
   int id;
   String name;
   dynamic value;
-  String currency;
-  bool isCurrent;
-  bool isDone;
+  dynamic currency;
+  dynamic isCurrent;
+  dynamic isDone;
 
   StageId({
     required this.id,
