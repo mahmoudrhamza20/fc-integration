@@ -26,66 +26,68 @@ class CodeSentScreen extends StatelessWidget {
           backgroundColor: BrandColors.primary,
           foregroundColor: Colors.white,
         ),
-        body: SafeArea(
-          child: BlocProvider(
-            create: (context) => StagesCubit(),
-            child: BlocBuilder<StagesCubit, StagesState>(
-              builder: (context, state) {
-                final cubit = StagesCubit.of(context);
-                return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipPath(
-                        clipper: WaveClipperTwo(),
-                        child: Container(
-                          height: 100,
-                          color: BrandColors.primary,
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      const Text(
-                        'ادخل الكود',
-                        style:
-                            TextStyle(color: BrandColors.primary, fontSize: 18),
-                      ),
-                      Form(
-                        key: cubit.formKey,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SizedBox(
-                            width: 300,
-                            child: customTextField(
-                                validator: (value) =>
-                                    Validator.generalField(value),
-                                endIcon: null,
-                                startIcon: null,
-                                hintText: 'الكود',
-                                isPassword: false,
-                                controller: cubit.codeController,
-                                type: TextInputType.text),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: BlocProvider(
+              create: (context) => StagesCubit(),
+              child: BlocBuilder<StagesCubit, StagesState>(
+                builder: (context, state) {
+                  final cubit = StagesCubit.of(context);
+                  return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipPath(
+                          clipper: WaveClipperTwo(),
+                          child: Container(
+                            height: 100,
+                            color: BrandColors.primary,
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20.h),
-                      state is JoinGroupLoading
-                          ? const Center(child: CircularProgressIndicator())
-                          : customButton(
-                              text: 'التالي',
-                              onTap: () {
-                                cubit.joinGroup(
-                                    groupId: groupId, oldUser: founderId);
-                                print(
-                                  groupId.toString(),
-                                );
-                                print(founderId.toString());
-                                // if (
-                                //   formKey.currentState!.validate()) {
-                                //   MagicRouter.navigateTo(const AcceptJoinToGroupScreen());
-                                // }
-                              },
-                              context: context),
-                    ]);
-              },
+                        SizedBox(height: 20.h),
+                        const Text(
+                          'ادخل الكود',
+                          style: TextStyle(
+                              color: BrandColors.primary, fontSize: 18),
+                        ),
+                        Form(
+                          key: cubit.formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SizedBox(
+                              width: 300,
+                              child: customTextField(
+                                  validator: (value) =>
+                                      Validator.generalField(value),
+                                  endIcon: null,
+                                  startIcon: null,
+                                  hintText: 'الكود',
+                                  isPassword: false,
+                                  controller: cubit.codeController,
+                                  type: TextInputType.text),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        state is JoinGroupLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : customButton(
+                                text: 'التالي',
+                                onTap: () {
+                                  cubit.joinGroup(
+                                      groupId: groupId, oldUser: founderId);
+                                  print(
+                                    groupId.toString(),
+                                  );
+                                  print(founderId.toString());
+                                  // if (
+                                  //   formKey.currentState!.validate()) {
+                                  //   MagicRouter.navigateTo(const AcceptJoinToGroupScreen());
+                                  // }
+                                },
+                                context: context),
+                      ]);
+                },
+              ),
             ),
           ),
         ));

@@ -164,21 +164,24 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                                             ),
                                           ),
                                         )
-                                      : SizedBox(
-                                          height: 80.h,
-                                          child: ListView.separated(
-                                            itemCount: cubit.groupData!.length,
-                                            itemBuilder: (context, index) =>
-                                                BuildRow(
-                                              index: index,
-                                              groupData:
-                                                  cubit.groupData![index],
-                                              // groupById: cubit.groupById!,
+                                      : SingleChildScrollView(
+                                          child: SizedBox(
+                                            height: 100.h,
+                                            child: ListView.separated(
+                                              itemCount:
+                                                  cubit.groupData!.length,
+                                              itemBuilder: (context, index) =>
+                                                  BuildRow(
+                                                index: index,
+                                                groupData:
+                                                    cubit.groupData![index],
+                                                // groupById: cubit.groupById!,
+                                              ),
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                          int index) =>
+                                                      const Divider(),
                                             ),
-                                            separatorBuilder:
-                                                (BuildContext context,
-                                                        int index) =>
-                                                    const Divider(),
                                           ),
                                         )
                             ],

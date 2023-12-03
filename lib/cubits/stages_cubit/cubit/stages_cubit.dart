@@ -18,7 +18,7 @@ class StagesCubit extends Cubit<StagesState> {
   late List<Stage>? stage = [];
   StageId? stageById;
   List<SearchGroup> searchGroup = [];
-  //SearchGroup? searchGroup2;
+
   SearchData? searchData;
   late List<SuggestedGroup> suggestedGroup = [];
   GetStagesByIdData? stagesByIdData;
@@ -26,7 +26,7 @@ class StagesCubit extends Cubit<StagesState> {
   final codeController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
   JoinGroup? joinGroupData;
-  late List<String>? codes;
+  late List<dynamic>? codes;
 
   final getStagesRepo = GetStagesRepo();
   static StagesCubit of(context) => BlocProvider.of(context);
@@ -41,7 +41,6 @@ class StagesCubit extends Cubit<StagesState> {
       },
       (res) async {
         showSnackBar(res.message);
-        //stagesData = res.data;
         stage = res.data.stages;
 
         emit(StagesLoaded());

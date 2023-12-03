@@ -277,7 +277,7 @@ class _CompleteProfileScreenBodyState extends State<CompleteProfileScreenBody> {
                                           child: Text('برجاء اختيار النوع')),
                                       actions: [
                                         SizedBox(
-                                          height: 80.h,
+                                          height: 100.h,
                                           width: 70.w,
                                           child: ListView.builder(
                                             shrinkWrap: true,
