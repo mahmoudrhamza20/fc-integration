@@ -49,22 +49,72 @@ class SubscribeGroup extends StatelessWidget {
                     )),
                   ),
                 ),
+                Text(
+                  "المراحل الحالية",
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: BrandColors.primary,
+                  ),
+                ),
                 SizedBox(height: 20.h),
-                state is StagesLoading && cubit.stage!.isEmpty
+                state is StagesLoading && cubit.stageCurrent!.isEmpty
                     ? const Center(child: CircularProgressIndicator())
-                    : SizedBox(
-                        height: 200.h,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: cubit.stage!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return StagesRow(
-                              stage: cubit.stage![index],
-                            );
-                          },
-                        ),
-                      ),
+                    : cubit.stageCurrent!.isEmpty
+                        ? Text(
+                            'لا يوجد',
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                              color: BrandColors.primary,
+                            ),
+                          )
+                        : SizedBox(
+                            height:
+                                cubit.stageCurrent!.length == 1 ? 100.h : 250.h,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: cubit.stageCurrent!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return StagesRow(
+                                  stage: cubit.stageCurrent![index],
+                                );
+                              },
+                            ),
+                          ),
+                cubit.stageNotCurrent!.isNotEmpty
+                    ? Column(
+                        children: [
+                          Text(
+                            "المراحل السابقة",
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              color: BrandColors.primary,
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          state is StagesLoading &&
+                                  cubit.stageNotCurrent!.isEmpty
+                              ? const Center(child: CircularProgressIndicator())
+                              : SizedBox(
+                                  height: cubit.stageNotCurrent!.length == 1
+                                      ? 100.h
+                                      : 300.h,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: cubit.stageNotCurrent!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return StagesRow(
+                                        stage: cubit.stageNotCurrent![index],
+                                      );
+                                    },
+                                  ),
+                                ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
 
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,

@@ -15,7 +15,9 @@ class StagesCubit extends Cubit<StagesState> {
   StagesCubit() : super(StagesInitial());
 
   StagesData? stagesData;
-  late List<Stage>? stage = [];
+  late List<Stage>? stageCurrent = [];
+  late List<Stage>? stageNotCurrent = [];
+
   StageId? stageById;
   List<SearchGroup> searchGroup = [];
 
@@ -41,7 +43,14 @@ class StagesCubit extends Cubit<StagesState> {
       },
       (res) async {
         showSnackBar(res.message);
-        stage = res.data.stages;
+        // stage = res.data.stages;
+        for (var stage in res.data.stages) {
+          if (stage.isCurrent == "1") {
+            stageCurrent!.add(stage);
+          } else {
+            stageNotCurrent!.add(stage);
+          }
+        }
 
         emit(StagesLoaded());
       },
