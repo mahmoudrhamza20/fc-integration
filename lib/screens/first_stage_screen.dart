@@ -6,6 +6,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/brand_colors.dart';
 import 'package:shared/cubits/stages_cubit/cubit/stages_cubit.dart';
+import 'package:shared/screens/second_privacy_screen.dart';
 import 'package:shared/screens/suggesion_group_details.dart';
 import 'package:shared/widgets/custom_button.dart';
 import '../core/utils/magic_router.dart';
@@ -182,7 +183,18 @@ class FirstStageScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          )
+                          ),
+                    SizedBox(height: 20.h),
+                    InkWell(
+                      onTap: () {
+                        MagicRouter.navigateTo(SecondPrivacyScreen(
+                          stageId: stageId,
+                        ));
+                      },
+                      child: Text(' طلب تأسيس مجموعة جديدة للمرحلة $stageName',
+                          style: TextStyle(
+                              color: BrandColors.primary, fontSize: 16.sp)),
+                    ),
                   ]),
                 ),
               );

@@ -11,8 +11,8 @@ import 'package:shared/widgets/custom_button.dart';
 import '../core/utils/parse_html.dart';
 
 class SecondPrivacyScreen extends StatelessWidget {
-  const SecondPrivacyScreen({super.key});
-
+  const SecondPrivacyScreen({super.key, required this.stageId});
+  final int stageId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +50,9 @@ class SecondPrivacyScreen extends StatelessWidget {
                     child: customButton(
                         text: 'موافق',
                         onTap: () {
-                          MagicRouter.navigateTo(
-                              const AddRequestToCreateGroupScreen());
+                          MagicRouter.navigateTo(AddRequestToCreateGroupScreen(
+                            stageId: stageId,
+                          ));
                         },
                         context: context),
                   ),

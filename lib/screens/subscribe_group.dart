@@ -192,7 +192,7 @@ class StagesRow extends StatelessWidget {
                 stageName: stage.name,
               ));
             },
-            child: customCard(title: stage.name, width: 120.w, height: 60.h)),
+            child: customCard(title: stage.name, width: 150.w, height: 70.h)),
       ],
     );
   }

@@ -8,12 +8,14 @@ import 'package:shared/models/error_model.dart';
 import 'package:shared/models/establish_group_model.dart';
 
 class EstablishGroupRepo {
-  Future<Either<String, EstablishGroupModel>> establishGroup() async {
-    final response =
-        await DioHelper.postwithoutBody(EndPoints.establishGroup, headers: {
+  Future<Either<String, EstablishGroupModel>> establishGroup(
+      {required int stageId}) async {
+    final response = await DioHelper.post(EndPoints.establishGroup, headers: {
       'Accept-Language': 'ar',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${AppStorage.getToken}'
+    }, body: {
+      'stage_id': stageId
     });
     try {
       if (response.statusCode == 200 && response.data['result'] == true) {

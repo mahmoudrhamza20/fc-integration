@@ -18,6 +18,8 @@ Widget customCard(
             Text(
               title,
               style: const TextStyle(fontSize: 18),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             )
           ],
         ),

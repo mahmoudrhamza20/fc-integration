@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/magic_router.dart';
 import '../../../core/widgets/custom_snackbar.dart';
@@ -11,12 +12,13 @@ class EstablishGroupCubit extends Cubit<EstablishGroupState> {
   static EstablishGroupCubit of(context) => BlocProvider.of(context);
   final establishGroupRepo = EstablishGroupRepo();
 
-  Future establishGroup() async {
+  Future establishGroup({required int stageId}) async {
     emit(EstablishGroupLoading());
-    final res = await establishGroupRepo.establishGroup();
+    final res = await establishGroupRepo.establishGroup(stageId: stageId);
     res.fold(
       (err) {
         showSnackBar(err);
+        print(err);
         emit(EstablishGroupError());
       },
       (res) async {

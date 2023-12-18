@@ -9,8 +9,8 @@ import 'package:shared/screens/home_screen.dart';
 import 'package:shared/widgets/custom_button.dart';
 
 class AddRequestToCreateGroupScreen extends StatelessWidget {
-  const AddRequestToCreateGroupScreen({super.key});
-
+  const AddRequestToCreateGroupScreen({super.key, required this.stageId});
+  final int stageId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +46,7 @@ class AddRequestToCreateGroupScreen extends StatelessWidget {
                   : Center(
                       child: customButton(
                           text: 'تقديم الطلب',
-                          onTap: () => cubit.establishGroup(),
+                          onTap: () => cubit.establishGroup(stageId: stageId),
                           context: context),
                     ),
             ],
