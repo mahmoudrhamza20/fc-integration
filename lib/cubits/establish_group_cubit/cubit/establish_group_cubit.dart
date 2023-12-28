@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/magic_router.dart';
 import '../../../core/widgets/custom_snackbar.dart';

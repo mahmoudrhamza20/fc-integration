@@ -9,6 +9,7 @@ import 'package:shared/core/utils/hex_color.dart';
 import 'package:shared/core/utils/magic_router.dart';
 import 'package:shared/core/utils/validator.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
+import 'package:shared/screens/add_phone_to_reset_pass_screen.dart';
 import 'package:shared/screens/splash_screen.dart';
 import 'package:shared/widgets/custom_button.dart';
 import 'package:shared/widgets/custom_text_field.dart';
@@ -169,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderSide: const BorderSide(
                                         width: 1, color: BrandColors.primary)),
                                 hintMaxLines: 1,
-                                hintText: 'رقم الهاتف (برجاء عدم كنتبة 0)',
+                                hintText: 'رقم الهاتف (برجاء عدم كتابة 0)',
                                 hintStyle: TextStyle(
                                     fontSize: 14.sp,
                                     fontFamily: 'Poppins',
@@ -220,7 +221,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 10.h,
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () => MagicRouter.navigateTo(
+                                  const AddPhoneToResetPassScreen()),
                               child: Text(
                                 "نسيت كلمة السر؟",
                                 style: TextStyle(

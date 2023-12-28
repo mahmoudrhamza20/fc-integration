@@ -17,6 +17,9 @@ class EndPoints {
   static const String joinGroup = 'joinGroup';
   static const String establishGroup = 'establishGroup';
   // static const String searchKeywords = 'groupNumber?numbers=2';
+  static const String checkPhoneToResetPass = 'users/requestReset';
+  static const String checkOtpToResetPass = 'users/verifyOtp';
+  static const String resetPassword = 'users/resetPassword';
 
   static String groupById({required int id}) {
     return 'groups/$id';

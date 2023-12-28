@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/core/utils/app_storage.dart';
 import 'package:shared/cubits/login_cubit/cubit/login_cubit.dart';
+import 'package:shared/cubits/reset_pass_cubit/cubit/reset_pass_cubit.dart';
 import 'package:shared/firebase_options.dart';
 import 'package:shared/screens/splash_screen.dart';
 import 'package:shared/translations/codegen_loader.g.dart';
@@ -57,6 +58,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => RegisterCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ResetPassCubit(),
         ),
         BlocProvider(
           create: (context) => GetGovernmentsAndCountriesCubit()
